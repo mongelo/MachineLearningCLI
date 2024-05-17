@@ -23,9 +23,12 @@
             ShowHelpTooltip();
         }
 
-        public static void ShowHelpTooltip() 
+        public static void ShowHelpTooltip(string commandName = "") 
         {
-            Console.WriteLine("Type 'help' for a list of commands.");
+            if(commandName == String.Empty)
+                Console.WriteLine("Type 'help' for a list of commands.");
+            else
+                Console.WriteLine($"Type '{commandName} --help' for a list of commands.");
         }
 
         public static void ShowExampleCommands()

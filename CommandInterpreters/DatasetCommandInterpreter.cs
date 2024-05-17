@@ -6,13 +6,16 @@ namespace MachineLearningCLI.CommandInterpreters
     {
         public static void Interpret(Command command)
         {
-            switch (command.CommandText)
+            switch (command.SubCommandName)
             {
-                case "dataset":
-                    HandleDatasetCommand(command.Arguments);
+                case "":
+                    ShowDatasetHelp(command.CommandName);
                     break;
-                case "dataset-list":
-                    HandleDatasetListCommand();
+                case "--list":
+                    HandleDatasetListCommand(command.Arguments);
+                    break;
+                case "--help":
+                    ShowDatasetHelp(command.CommandName);
                     break;
                 default:
                     ConsoleHelper.HandleUnknownCommand();
@@ -29,9 +32,16 @@ namespace MachineLearningCLI.CommandInterpreters
             }
         }
 
-        private static void HandleDatasetListCommand()
+        private static void ShowDatasetHelp(string commandName)
+        {
+            //TODO: Show more specific helps
+            ConsoleHelper.ShowHelpTooltip(commandName);
+        }
+
+        private static void HandleDatasetListCommand(IEnumerable<string> arguments)
         {
             Console.WriteLine("Handling 'dataset-list' command");
         }
+        
     }
 }

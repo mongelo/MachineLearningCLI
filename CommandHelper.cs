@@ -7,16 +7,21 @@ namespace MachineLearningCLI
         public static Command ProcessCommand(string userInput)
         {
             string[] parts = userInput.Split(' ');
-            string command = parts[0];
             string[] arguments = new string[parts.Length - 1];
             Array.Copy(parts, 1, arguments, 0, arguments.Length);
 
+            var argumentsList = arguments.ToList();
+            var subCommandName = argumentsList.Where(arg => arg.StartsWith("--")).SingleOrDefault() ?? "";
+            argumentsList.Remove(subCommandName);
+
             return new Command
             {
-                CommandText = command,
+                CommandText = userInput,
                 CommandName = parts[0],
-                Arguments = arguments.ToList()
+                SubCommandName = subCommandName,
+                Arguments = argumentsList
             };
         }
+
     }
 }

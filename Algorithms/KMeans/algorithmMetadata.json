@@ -1,0 +1,5 @@
+﻿{
+  "Name": "K-Means Clustering",
+  "Description": "K-means is a popular clustering algorithm that partitions data into kkk distinct clusters based on feature similarity. It works by initializing kkk centroids, assigning each data point to the nearest centroid, and then iteratively updating the centroids based on the mean of the assigned points until convergence. The goal is to minimize the sum of squared distances between data points and their respective centroids.",
+  "TimeComplexity": "T(NTK), where N is the total number of data points, K is the total number of partitions, and T is the number of iterations in the clustering process."
+}
