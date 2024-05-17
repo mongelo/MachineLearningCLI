@@ -1,7 +1,6 @@
-﻿using MachineLearningCLI;
-using MachineLearningCLI.CommandInterpreters;
+﻿using MachineLearningCLI.CommandInterpreters;
 
-namespace MyCLI
+namespace MachineLearningCLI
 {
     class Program
     {
@@ -14,6 +13,7 @@ namespace MyCLI
                 var currentInput = ConsoleHelper.GetUserInput();
                 var command = CommandHelper.ProcessCommand(currentInput);
                 CommandInterpreter.Interpret(command);
+                if(currentInput != String.Empty)ConsoleHelper.PrintEmptyLine();
             }
         }
 

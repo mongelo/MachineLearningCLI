@@ -38,7 +38,7 @@
 
         public static void PrintEmptyLine() 
         {
-            Console.WriteLine("\n");
+            Console.WriteLine("");
         }
 
         public static string GetUserInput() 

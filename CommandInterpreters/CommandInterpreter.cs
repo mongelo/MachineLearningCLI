@@ -11,6 +11,7 @@ namespace MachineLearningCLI.CommandInterpreters
                 case "":
                     break;
                 case "dataset":
+                case "d":
                     DatasetCommandInterpreter.Interpret(command);
                     break;
                 case "exit":
