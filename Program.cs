@@ -20,7 +20,9 @@ namespace MachineLearningCLI
         static void InitializeApplication()
         {
             ConsoleHelper.PrintWelcomeHeader();
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Welcome to Machine Learning CLI - Version 1.0.0");
+            Console.ResetColor();
             ConsoleHelper.PrintEmptyLine();
             ConsoleHelper.ShowExampleCommands();
             ConsoleHelper.PrintEmptyLine();

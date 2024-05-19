@@ -11,7 +11,8 @@ namespace MachineLearningCLI
             Array.Copy(parts, 1, arguments, 0, arguments.Length);
 
             var argumentsList = arguments.ToList();
-            var subCommandName = argumentsList.Where(arg => arg.StartsWith("--")).SingleOrDefault() ?? "";
+            var subCommandName = parts.Length == 1 ? "" : parts[1];
+            //var subCommandName = argumentsList.Where(arg => arg.StartsWith("--")).SingleOrDefault() ?? "";
             argumentsList.Remove(subCommandName);
 
             return new Command

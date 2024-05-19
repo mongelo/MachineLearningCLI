@@ -21,7 +21,7 @@
             }
         }
 
-        public static string ReadJsonFromFile(string filePath)
+        public static string ReadRawTextFromFile(string filePath)
         {
             if (!File.Exists(filePath))
             {

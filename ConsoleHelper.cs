@@ -28,7 +28,7 @@
             if(commandName == String.Empty)
                 Console.WriteLine("Type 'help' for a list of commands.");
             else
-                Console.WriteLine($"Type '{commandName} --help' for a list of commands.");
+                Console.WriteLine($"Type '{commandName} help' for a list of commands.");
         }
 
         public static void ShowExampleCommands()
@@ -46,5 +46,15 @@
             Console.Write("> ");
             return Console.ReadLine() ?? "";
         }
+
+        public static void WriteHelpText(string command, string details)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(command);
+            Console.ResetColor();
+            Console.WriteLine(" - " + details);
+        }
+        
+        
     }
 }
