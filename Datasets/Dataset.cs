@@ -8,6 +8,7 @@ namespace MachineLearningCLI.Datasets
 	{
 		protected string DatasetRawData { get; set; } = String.Empty;
 		public DatasetMetadata DatasetMetadata { get; set; }
+
 		private string[] _columnNames { get; set; }
         private DataPoint<T>[] _dataPoints;
 
@@ -21,6 +22,18 @@ namespace MachineLearningCLI.Datasets
 		public void Load()
 		{
 			DatasetRawData = DatasetRepository.GetDatsetRawText(DatasetMetadata);
+
+            _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
+            var allRawRows = DatasetRawData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            _columnNames = allRawRows[0].Replace("\r", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var allRawRowsList = allRawRows.Skip(1);
+
+            var i = 0;
+            foreach (var row in allRawRowsList)
+            {
+                _dataPoints[i] = new DataPoint<T>(row.Replace("\r", ""));
+                i++;
+            }
         }
 
         public void PrintRawDataset()
@@ -30,13 +43,6 @@ namespace MachineLearningCLI.Datasets
 
 		public void PrintDatasetFormatted()
         {
-            //BOTH INIT AND PRINT, SPLIT THIS UP
-
-            _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
-            var allRawRows = DatasetRawData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            _columnNames = allRawRows[0].Replace("\r","").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var allRawRowsList = allRawRows.Skip(1);
-
             foreach (var column in _columnNames)
             {
                 Console.Write(column+"   ");
@@ -44,16 +50,13 @@ namespace MachineLearningCLI.Datasets
             ConsoleHelper.PrintEmptyLine();
 
             var i = 0;
-            foreach (var row in allRawRowsList)
+            while(i < DatasetMetadata.Size)
             {
-				_dataPoints[i] = new DataPoint<T>(row.Replace("\r", ""));
                 _dataPoints[i].Print();
                 i++;
             }
-
-
-
         }
+
 
     }
 }
