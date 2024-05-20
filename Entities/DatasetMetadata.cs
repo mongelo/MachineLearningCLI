@@ -8,6 +8,7 @@
         public string Description { get; set; } = String.Empty;
         public string Source { get; set; } = String.Empty;
         public int Size { get; set; }
-        public string FileFormat { get; set; }
+        public string FileFormat { get; set; } = String.Empty;
+        public int Columns { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace MachineLearningCLI.Repositories
             return FileHelper.ReadRawTextFromFile(DatasetDirectoryPath()+"\\"+datasetMetadata.Name + "\\data"+datasetMetadata.FileFormat);
         }
 
-        private static string DatasetDirectoryPath()
+        public static string DatasetDirectoryPath()
         {
             var projectFolder = FileHelper.GetProjectFolder();
             return Path.Combine(projectFolder, _datasetFolderName);

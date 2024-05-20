@@ -1,7 +1,8 @@
-﻿using MachineLearningCLI.Entities;
-using MachineLearningCLI.Helpers;
+﻿using MachineLearningCLI.Datasets;
+using MachineLearningCLI.Datasets.Iris_Flower;
+using MachineLearningCLI.Entities;
 using MachineLearningCLI.Repositories;
-using System.Linq;
+using System.Data;
 
 namespace MachineLearningCLI.CommandInterpreters
 {
@@ -96,15 +97,19 @@ namespace MachineLearningCLI.CommandInterpreters
                 NoDatasetFound(datasetQuery);
                 return;
             }
+
+            //Change in the future
+            var dataset = new Dataset<IrisFlower>(datasetMetadata);
+            
             var isRaw = arguments.Contains("raw") || arguments.Contains("r");
 
             if (isRaw)
             {
-                Console.WriteLine(DatasetRepository.GetDatsetRawText(datasetMetadata));
+                dataset.PrintRawDataset();
             }
             else
             {
-                Console.WriteLine("NOT YET IMPLEMENTED! Try raw!");
+                dataset.PrintDatasetFormatted();
             }
         }
 
