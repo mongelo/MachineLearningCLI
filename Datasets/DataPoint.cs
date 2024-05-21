@@ -6,7 +6,6 @@
         void PrintDataPoint();
     }
 
-
     public class DataPoint<T> where T : IDataPoint, new()
     {
         public T Data;

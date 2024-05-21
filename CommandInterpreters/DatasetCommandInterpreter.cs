@@ -98,9 +98,8 @@ namespace MachineLearningCLI.CommandInterpreters
                 return;
             }
 
-            //Change in the future
-            var dataset = new Dataset<IrisFlower>(datasetMetadata);
-            
+            var dataset = DatasetFactory.CreateDataset(datasetMetadata);
+
             var isRaw = arguments.Contains("raw") || arguments.Contains("r");
 
             if (isRaw)
