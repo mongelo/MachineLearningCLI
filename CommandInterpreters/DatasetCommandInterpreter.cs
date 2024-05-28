@@ -13,12 +13,12 @@ namespace MachineLearningCLI.CommandInterpreters
 
         public static void Interpret(Command command)
         {
-            ReloadDataset();
+            ReloadDatasetMetadata();
 
             switch (command.SubCommandName)
             {
                 case "":
-                    HandleNoSubcommand();
+                    ConsoleHelper.ShowHelpTooltip(_commandName);
                     break;
                 case "help":
                 case "h":
@@ -41,11 +41,6 @@ namespace MachineLearningCLI.CommandInterpreters
                     ConsoleHelper.HandleUnknownCommand();
                     break;
             }
-        }
-
-        private static void HandleNoSubcommand()
-        {
-            ConsoleHelper.ShowHelpTooltip(_commandName);
         }
 
         private static void ShowDatasetHelp()
@@ -124,7 +119,7 @@ namespace MachineLearningCLI.CommandInterpreters
             ShowAllDatasets();
         }
 
-        private static void ReloadDataset()
+        private static void ReloadDatasetMetadata()
         {
             _datasetsMetadata.Clear();
             _datasetsMetadata = DatasetRepository.LoadAllDatasetMetadata();

@@ -14,6 +14,10 @@ namespace MachineLearningCLI.CommandInterpreters
                 case "d":
                     DatasetCommandInterpreter.Interpret(command);
                     break;
+                case "algorithm":
+                case "a":
+                    AlgorithmCommandInterpreter.Interpret(command);
+                    break;
                 case "exit":
                     Console.WriteLine("Exiting CLI. Goodbye!");
                     return;
