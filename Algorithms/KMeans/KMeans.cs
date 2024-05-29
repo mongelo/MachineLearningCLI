@@ -1,7 +1,6 @@
 ﻿using MachineLearningCLI.Datasets.Iris_Flower;
 using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Repositories;
-using System;
 
 namespace MachineLearningCLI.Algorithms.KMeans
 {
@@ -10,7 +9,7 @@ namespace MachineLearningCLI.Algorithms.KMeans
 		//Should support any dataset later
 		public void RunKMeans(Dataset<IrisFlower> dataset, int k)
 		{ 
-			
+			var centroids = KMeansHelper.InitializeKMeansCentroidsToBeRandomDataPoints(dataset, k);
 		}
 
 

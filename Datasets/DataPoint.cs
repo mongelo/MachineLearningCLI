@@ -6,7 +6,7 @@
         void PrintDataPoint();
     }
 
-    public class DataPoint<T> where T : IDataPoint, new()
+	public class DataPoint<T>  where T : IDataPoint, new()
     {
         public T Data;
 
@@ -16,7 +16,7 @@
             Data.InitializeDataPoint(values);
         }
 
-        public void Print()
+		public void Print()
         {
             Data.PrintDataPoint();
         }

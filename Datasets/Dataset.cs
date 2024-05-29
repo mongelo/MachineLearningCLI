@@ -4,18 +4,18 @@ using MachineLearningCLI.Repositories;
 namespace MachineLearningCLI.Datasets
 {
     public interface IDataset
-    {
+	{
         public void PrintRawDataset();
         public void PrintDatasetFormatted();
-    }
+	}
 
     public class Dataset<T> : IDataset where T : IDataPoint, new()
     {
 		protected string DatasetRawData { get; set; } = String.Empty;
 		public DatasetMetadata DatasetMetadata { get; set; }
+        public DataPoint<T>[] _dataPoints;
 
         private string[] _columnNames { get; set; }
-        private DataPoint<T>[] _dataPoints;
 
         public Dataset(DatasetMetadata datasetMetadata) 
 		{
@@ -62,5 +62,5 @@ namespace MachineLearningCLI.Datasets
             }
         }
 
-    }
+	}
 }

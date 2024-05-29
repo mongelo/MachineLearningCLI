@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using MachineLearningCLI.Entities;
+﻿using MachineLearningCLI.Entities;
 
 namespace MachineLearningCLI
 {
