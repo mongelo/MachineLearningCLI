@@ -45,7 +45,7 @@ namespace MachineLearningCLI.Datasets.Iris_Flower
 			}
 		}
 
-		public static string GetClassName(int classNumber)
+		public string GetClassName(int classNumber)
 		{
 			switch (classNumber)
 			{

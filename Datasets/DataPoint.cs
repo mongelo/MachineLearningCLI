@@ -7,6 +7,7 @@
 
 		double[] GetDataAsDoubleArray();
         int GetClass();
+		string GetClassName(int classNumber);
 	}
 
 	public interface IDataPoint

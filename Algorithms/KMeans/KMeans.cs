@@ -125,8 +125,7 @@ namespace MachineLearningCLI.Algorithms.KMeans
 			foreach (var centroid in centroids)
 			{
 				centroidCount++;
-				Console.Write($"   - Centroid {centroidCount} (Most likely class = {IrisFlower.GetClassName(centroidClass[centroidCount - 1])}): ");
-				//Console.Write($"   - Centroid {centroidCount} (Most likely class = {dataset.GetClassName(centroidClass[centroidCount - 1])}): ");
+				Console.Write($"   - Centroid {centroidCount} (Most likely class = {dataset.GetClassName(centroidClass[centroidCount - 1])}): ");
 				Console.WriteLine(string.Join(", ", centroid.Select(c => $"{c:F4}")));
 			}
 		}

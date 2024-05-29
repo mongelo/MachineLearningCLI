@@ -18,6 +18,7 @@ namespace MachineLearningCLI.Datasets
 		protected string DatasetRawData { get; set; } = String.Empty;
 		public DatasetMetadata DatasetMetadata { get; set; }
         public DataPoint<T>[] _dataPoints;
+        public T StaticDataPoint;
 
         private string[] _columnNames { get; set; }
 
@@ -26,7 +27,8 @@ namespace MachineLearningCLI.Datasets
             DatasetMetadata = datasetMetadata;
             _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
             _columnNames = new string[DatasetMetadata.Size];
-            Load();
+            StaticDataPoint = new T();
+			Load();
 		}
 
 		public void Load()
@@ -81,5 +83,9 @@ namespace MachineLearningCLI.Datasets
 			return _dataPoints[index].Data.GetClass();
 		}
 
+		public string GetClassName(int classNumber)
+		{
+			return StaticDataPoint.GetClassName(classNumber);
+		}
 	}
 }
