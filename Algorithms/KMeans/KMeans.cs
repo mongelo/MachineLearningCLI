@@ -153,18 +153,15 @@ namespace MachineLearningCLI.Algorithms.KMeans
 				Console.WriteLine($"Specify the number of clusters (k) to use. Parameter format: \"k=<number-of-clusters>\".");
 				return;
 			}
+
 			var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
 
 			var dataset = (Dataset<IrisFlower>)DatasetFactory.CreateDataset(datasetMetadata);
 
-			if(iterations != null)
-			{
-				RunKMeans(dataset, Int32.Parse(k), Int32.Parse(iterations));
-			}
-			else
-			{
-				RunKMeans(dataset, Int32.Parse(k));
-			}
+			RunKMeans(dataset, Int32.Parse(k), iterations==null ? default : Int32.Parse(iterations));
+
+			//TODO: Run only on 70% and then evaluate the model on the remaining 30%
+
 		}
 
 	}
