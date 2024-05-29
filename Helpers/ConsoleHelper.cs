@@ -1,4 +1,4 @@
-﻿namespace MachineLearningCLI
+﻿namespace MachineLearningCLI.Helpers
 {
     public static class ConsoleHelper
     {
@@ -17,15 +17,15 @@
             ");
         }
 
-        public static void HandleUnknownCommand() 
+        public static void HandleUnknownCommand()
         {
             Console.WriteLine("Unknown command.");
             ShowHelpTooltip();
         }
 
-        public static void ShowHelpTooltip(string commandName = "") 
+        public static void ShowHelpTooltip(string commandName = "")
         {
-            if(commandName == String.Empty)
+            if (commandName == string.Empty)
                 Console.WriteLine("Type 'help' for a list of commands.");
             else
                 Console.WriteLine($"Type '{commandName} help' for a list of commands.");
@@ -36,12 +36,12 @@
             Console.WriteLine("Try commands like:\ndataset\nalgorithm\nwiki\nstats");
         }
 
-        public static void PrintEmptyLine() 
+        public static void PrintEmptyLine()
         {
             Console.WriteLine("");
         }
 
-        public static string GetUserInput() 
+        public static string GetUserInput()
         {
             Console.Write("> ");
             return Console.ReadLine() ?? "";
@@ -54,7 +54,7 @@
             Console.ResetColor();
             Console.WriteLine(" - " + details);
         }
-        
-        
+
+
     }
 }

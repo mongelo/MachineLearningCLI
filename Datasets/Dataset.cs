@@ -1,4 +1,5 @@
 ﻿using MachineLearningCLI.Entities;
+using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Datasets
@@ -7,9 +8,11 @@ namespace MachineLearningCLI.Datasets
 	{
         public void PrintRawDataset();
         public void PrintDatasetFormatted();
+		IDataPoint[] GetDataPoints();
+		double[][] GetDataPointsAsDoubleArray();
 	}
 
-    public class Dataset<T> : IDataset where T : IDataPoint, new()
+    public class Dataset<T> : IDataset where T : IData, new()
     {
 		protected string DatasetRawData { get; set; } = String.Empty;
 		public DatasetMetadata DatasetMetadata { get; set; }
@@ -61,6 +64,16 @@ namespace MachineLearningCLI.Datasets
                 i++;
             }
         }
+
+		public IDataPoint[] GetDataPoints()
+		{
+			return _dataPoints.Cast<IDataPoint>().ToArray();
+		}
+
+		public double[][] GetDataPointsAsDoubleArray()
+		{
+			return _dataPoints.Select(x => x.GetDataAsDoubleArray()).ToArray();
+		}
 
 	}
 }

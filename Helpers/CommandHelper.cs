@@ -1,6 +1,6 @@
 ﻿using MachineLearningCLI.Entities;
 
-namespace MachineLearningCLI
+namespace MachineLearningCLI.Helpers
 {
     public static class CommandHelper
     {
@@ -25,14 +25,14 @@ namespace MachineLearningCLI
         }
 
         public static string? GetParameterValueFromArguments(this IEnumerable<string> arguments, string parameterName)
-		{
-			parameterName += "=";
-			return arguments.Where(arg => arg.StartsWith(parameterName)).SingleOrDefault()?.GetParameterValue();
-		}
-
-		private static string? GetParameterValue(this string str)
         {
-			return str.Split('=')[1];
+            parameterName += "=";
+            return arguments.Where(arg => arg.StartsWith(parameterName)).SingleOrDefault()?.GetParameterValue();
         }
-	}
+
+        private static string? GetParameterValue(this string str)
+        {
+            return str.Split('=')[1];
+        }
+    }
 }

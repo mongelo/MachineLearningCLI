@@ -6,5 +6,6 @@
   "Source": "https://www.kaggle.com/datasets/arshid/iris-flower-dataset",
   "Size": 150,
   "Columns":  5,
-  "FileFormat": ".csv"
+  "FileFormat": ".csv",
+  "Classes": 3
 }

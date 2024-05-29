@@ -1,6 +1,7 @@
 ﻿using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Datasets.Iris_Flower;
 using MachineLearningCLI.Entities;
+using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 using System.Data;
 

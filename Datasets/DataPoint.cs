@@ -1,12 +1,18 @@
 ﻿namespace MachineLearningCLI.Datasets
 {
-    public interface IDataPoint
+    public interface IData
     {
         void InitializeDataPoint(string values);
         void PrintDataPoint();
-    }
+		double[] GetDataAsDoubleArray();
+	}
 
-	public class DataPoint<T>  where T : IDataPoint, new()
+	public interface IDataPoint
+	{
+        double[] GetDataAsDoubleArray();
+	}
+
+	public class DataPoint<T> : IDataPoint where T : IData, new()
     {
         public T Data;
 
@@ -16,10 +22,14 @@
             Data.InitializeDataPoint(values);
         }
 
+		public double[] GetDataAsDoubleArray()
+		{
+            return Data.GetDataAsDoubleArray();
+		}
+
 		public void Print()
         {
             Data.PrintDataPoint();
         }
-
-    }
+	}
 }

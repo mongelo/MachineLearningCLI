@@ -1,4 +1,5 @@
 ﻿using MachineLearningCLI.CommandInterpreters;
+using MachineLearningCLI.Helpers;
 
 namespace MachineLearningCLI
 {

@@ -2,7 +2,7 @@
 
 namespace MachineLearningCLI.Datasets.Iris_Flower
 {
-    public class IrisFlower : IDataPoint
+    public class IrisFlower : IData
     {
         public double SepalLengt;
         public double SepalWidth;
@@ -20,7 +20,13 @@ namespace MachineLearningCLI.Datasets.Iris_Flower
             Species = splitData[4];
         }
 
-        public void PrintDataPoint()
+        public double[] GetDataAsDoubleArray()
+        { 
+            return [ SepalLengt, SepalWidth, PetalLength, PetalWidth ];
+		}
+
+
+		public void PrintDataPoint()
         {    
             Console.WriteLine($"{SepalLengt:f2},          {SepalWidth:f2},         {PetalLength:f2},          {PetalWidth:f2},         {Species}");
         }
