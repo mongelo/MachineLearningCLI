@@ -1,9 +1,6 @@
-﻿using MachineLearningCLI.Datasets;
-using MachineLearningCLI.Datasets.Iris_Flower;
-using MachineLearningCLI.Entities;
+﻿using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
-using System.Data;
 
 namespace MachineLearningCLI.CommandInterpreters
 {
@@ -70,12 +67,11 @@ namespace MachineLearningCLI.CommandInterpreters
             }
 
             ConsoleHelper.PrintEmptyLine();
-            Console.WriteLine($"Name: {datasetMetadata.Name}, Id={datasetMetadata.Id}");
-            Console.WriteLine($"CLI Name: {datasetMetadata.CLIName}");
-            Console.WriteLine($"Size: N={datasetMetadata.Size}");
-            Console.WriteLine($"Source: {datasetMetadata.Source}");
-            ConsoleHelper.PrintEmptyLine();
-            Console.WriteLine($"Description: {datasetMetadata.Description}");
+            ConsoleHelper.WritePartlyGreenText($"Name: ", $"{datasetMetadata.Name}, Id={datasetMetadata.Id}");
+            ConsoleHelper.WritePartlyGreenText($"CLI Name: ",$"{datasetMetadata.CLIName}");
+            ConsoleHelper.WritePartlyGreenText($"Size: ", $"N={datasetMetadata.Size}");
+			ConsoleHelper.WritePartlyGreenText($"Source: ", $"{datasetMetadata.Source}");
+			ConsoleHelper.WritePartlyGreenText($"Description: ", $"{datasetMetadata.Description}");
         }
 
         private static void PrintDataset(IEnumerable<string> arguments)

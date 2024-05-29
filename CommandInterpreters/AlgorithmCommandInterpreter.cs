@@ -1,7 +1,6 @@
 ﻿using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
-using System.Linq;
 
 namespace MachineLearningCLI.CommandInterpreters
 {
@@ -21,7 +20,7 @@ namespace MachineLearningCLI.CommandInterpreters
                     break;
                 case "help":
                 case "h":
-                    ShowAlgorithmHelp();
+                    ShowAlgorithmHelp(command.Arguments);
                     break;
                 case "list":
                 case "l":
@@ -64,14 +63,37 @@ namespace MachineLearningCLI.CommandInterpreters
 		}
 
 
-		private static void ShowAlgorithmHelp()
+		private static void ShowAlgorithmHelp(IEnumerable<string> arguments)
         {
-            Console.WriteLine("Try commands like:");
-            ConsoleHelper.WriteHelpText("algorithm list", "Lists all available algorithms.");
-			ConsoleHelper.WriteHelpText("algorithm detail <algorithm-name || algorithm-id>", "Shows the detailed metadata of an algorithm specified by name or id.");
+			var algorithmQuery = arguments.FirstOrDefault();
+			if (algorithmQuery == null)
+			{
+				ShowGenericAlgorithmHelp();
+				return;
+			}
+
+			var algorithmMetadata = GetAlgorithmMetadataFromQuery(algorithmQuery);
+
+			if (algorithmMetadata == null)
+			{
+				ShowGenericAlgorithmHelp();
+				return;
+			}
+
+            ConsoleHelper.WriteHelpText(algorithmMetadata.CommandSyntax, "Runs the algorithm.");
 		}
 
-        private static void HandleAlgorithmListCommand(IEnumerable<string> arguments)
+        private static void ShowGenericAlgorithmHelp()
+        {
+			Console.WriteLine("Try commands like:");
+			ConsoleHelper.WriteHelpText("algorithm help <algorithm-name || algorithm-id>", "Shows how to run a specific algorithm.");
+			ConsoleHelper.WriteHelpText("algorithm list", "Lists all available algorithms.");
+			ConsoleHelper.WriteHelpText("algorithm detail <algorithm-name || algorithm-id>", "Shows the detailed metadata of an algorithm specified by name or id.");
+			ConsoleHelper.WriteHelpText("algorithm run <algorithm-name || algorithm-id> d=<dataset-name || dataset-id> <algorithm-specific-parameters>", "Trains and evaluates an algorithm.");
+		}
+
+
+		private static void HandleAlgorithmListCommand(IEnumerable<string> arguments)
         {
             Console.WriteLine("Total Algorithms: " + _algorithmsMetadata.Count);
             ShowAllAlgorithms();
@@ -101,12 +123,12 @@ namespace MachineLearningCLI.CommandInterpreters
             }
 
             ConsoleHelper.PrintEmptyLine();
-            Console.WriteLine($"Name: {algorithmMetadata.Name}, Id={algorithmMetadata.Id}");
-            Console.WriteLine($"CLI Name: {algorithmMetadata.CLIName}");
-            ConsoleHelper.PrintEmptyLine();
-            Console.WriteLine($"Description: {algorithmMetadata.Description}");
-			ConsoleHelper.PrintEmptyLine();
-			Console.WriteLine($"Time Complexity: {algorithmMetadata.TimeComplexity}");
+			ConsoleHelper.WritePartlyGreenText("Name: ", $"{algorithmMetadata.Name}, Id={algorithmMetadata.Id}");
+            ConsoleHelper.WritePartlyGreenText("CLI Name: ", $"{algorithmMetadata.CLIName}");
+			ConsoleHelper.WritePartlyGreenText("Command Syntax: ", $"{algorithmMetadata.CommandSyntax}");
+			ConsoleHelper.WritePartlyGreenText("Command Example: ", $"{algorithmMetadata.ExampleCommand}");
+			ConsoleHelper.WritePartlyGreenText("Time Complexity:", $"{algorithmMetadata.TimeComplexity}");
+            ConsoleHelper.WritePartlyGreenText("Description: ", $"{algorithmMetadata.Description}");
         }
 
         private static AlgorithmMetadata? GetAlgorithmMetadataFromQuery(string query)

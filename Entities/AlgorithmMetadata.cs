@@ -7,5 +7,7 @@
         public int Id { get; set; }
         public string Description { get; set; } = String.Empty;
         public string TimeComplexity { get; set; } = String.Empty;
-    }
+		public string CommandSyntax { get; set; } = String.Empty;
+		public string ExampleCommand { get; set; } = String.Empty;
+	}
 }

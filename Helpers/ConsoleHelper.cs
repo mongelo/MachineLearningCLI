@@ -55,6 +55,14 @@
             Console.WriteLine(" - " + details);
         }
 
+		public static void WritePartlyGreenText(string greenText, string whiteText)
+		{
+			Console.ForegroundColor = ConsoleColor.Green;
+			Console.Write(greenText);
+			Console.ResetColor();
+			Console.WriteLine(whiteText);
+		}
 
-    }
+
+	}
 }

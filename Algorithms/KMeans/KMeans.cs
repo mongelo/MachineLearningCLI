@@ -2,7 +2,6 @@
 using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Repositories;
 using MachineLearningCLI.Helpers;
-using System.Diagnostics.Metrics;
 
 namespace MachineLearningCLI.Algorithms.KMeans
 {
