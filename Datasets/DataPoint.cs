@@ -4,12 +4,15 @@
     {
         void InitializeDataPoint(string values);
         void PrintDataPoint();
+
 		double[] GetDataAsDoubleArray();
+        int GetClass();
 	}
 
 	public interface IDataPoint
 	{
         double[] GetDataAsDoubleArray();
+		int GetClass();
 	}
 
 	public class DataPoint<T> : IDataPoint where T : IData, new()
@@ -21,6 +24,11 @@
             Data = new T();
             Data.InitializeDataPoint(values);
         }
+
+		public int GetClass()
+		{
+			return Data.GetClass();
+		}
 
 		public double[] GetDataAsDoubleArray()
 		{

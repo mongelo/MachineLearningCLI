@@ -7,7 +7,7 @@ namespace MachineLearningCLI.Algorithms.KMeans
 {
     public class KMeans : IAlgorithm
 	{
-		const int numberOfConvergesInARowToComplete = 10;
+		const int numberOfConvergesInARowToComplete = 100;
 
 		//Should support any dataset later
 		public void RunKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations = 250)
@@ -93,12 +93,40 @@ namespace MachineLearningCLI.Algorithms.KMeans
 				iterations++;
 			}
 
+			//Assign a class to each centroid based on counts per class in dataPointCentroidAssignments
+			int[] centroidClass = new int[k];
+			for (int i = 0; i < k; i++)
+			{
+				int[] classCounts = new int[classes];
+				for (int j = 0; j < N; j++)
+				{
+					if (dataPointCentroidAssignments[j] == i)
+					{
+						classCounts[allData[j].GetClass()]++;
+					}
+				}
+
+				int maxClass = 0;
+				int maxCount = 0;
+				for (int j = 0; j < classes; j++)
+				{
+					if (classCounts[j] > maxCount)
+					{
+						maxCount = classCounts[j];
+						maxClass = j;
+					}
+				}
+
+				centroidClass[i] = maxClass;
+			}	
+
 			Console.WriteLine("Centroids:");
 			var centroidCount = 0;
 			foreach (var centroid in centroids)
 			{
 				centroidCount++;
-				Console.Write($"   - Centroid {centroidCount}: ");
+				Console.Write($"   - Centroid {centroidCount} (Most likely class = {IrisFlower.GetClassName(centroidClass[centroidCount - 1])}): ");
+				//Console.Write($"   - Centroid {centroidCount} (Most likely class = {dataset.GetClassName(centroidClass[centroidCount - 1])}): ");
 				Console.WriteLine(string.Join(", ", centroid.Select(c => $"{c:F4}")));
 			}
 		}

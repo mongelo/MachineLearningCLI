@@ -10,6 +10,7 @@ namespace MachineLearningCLI.Datasets
         public void PrintDatasetFormatted();
 		IDataPoint[] GetDataPoints();
 		double[][] GetDataPointsAsDoubleArray();
+        int GetClass(int index);
 	}
 
     public class Dataset<T> : IDataset where T : IData, new()
@@ -73,6 +74,11 @@ namespace MachineLearningCLI.Datasets
 		public double[][] GetDataPointsAsDoubleArray()
 		{
 			return _dataPoints.Select(x => x.GetDataAsDoubleArray()).ToArray();
+		}
+
+        public int GetClass(int index)
+		{
+			return _dataPoints[index].Data.GetClass();
 		}
 
 	}
