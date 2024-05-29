@@ -9,5 +9,6 @@
         public string TimeComplexity { get; set; } = String.Empty;
 		public string CommandSyntax { get; set; } = String.Empty;
 		public string ExampleCommand { get; set; } = String.Empty;
+		public string DefaultParameters { get; set; } = String.Empty;
 	}
 }

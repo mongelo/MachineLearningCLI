@@ -7,16 +7,17 @@ namespace MachineLearningCLI.Algorithms.KMeans
 {
     public class KMeans : IAlgorithm
 	{
+		const int numberOfConvergesInARowToComplete = 10;
+
 		//Should support any dataset later
-		//Todo check for convergence and end early
-		public void RunKMeans(Dataset<IrisFlower> dataset, int k)
+		public void RunKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations = 250)
 		{
 			var allData = dataset.GetDataPoints();
-			var numberOfIterations = 250;
 			var N = dataset.DatasetMetadata.Size;
 			var dimensions = dataset.DatasetMetadata.Columns-1;
 			var classes = dataset.DatasetMetadata.Classes;
 			var centroids = KMeansHelper.InitializeKMeansCentroidsToBeRandomDataPoints(dataset, k);
+			var convergesInARow = 0;
 
 			int[] dataPointCentroidAssignments = new int[N];
 			int iterations = 0;
@@ -71,6 +72,22 @@ namespace MachineLearningCLI.Algorithms.KMeans
 						newCentroids[i][j] /= assignmentsPerCluster[i];
 					}
 				}
+
+				//Check if the centroids have changed
+				if (MathHelper.AreEqual(centroids, newCentroids, 0.0000001))
+				{
+					convergesInARow++;
+					if(convergesInARow == numberOfConvergesInARowToComplete)
+					{
+						Console.WriteLine($"Converged after: {iterations + 1} iterations.");
+						break;
+					}
+				}
+				else 
+				{
+					convergesInARow = 0;
+				}
+
 				centroids = newCentroids;
 
 				iterations++;
@@ -109,29 +126,18 @@ namespace MachineLearningCLI.Algorithms.KMeans
 				Console.WriteLine($"Specify the number of clusters (k) to use. Parameter format: \"k=<number-of-clusters>\".");
 				return;
 			}
+			var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
 
 			var dataset = (Dataset<IrisFlower>)DatasetFactory.CreateDataset(datasetMetadata);
-			RunKMeans(dataset, Int32.Parse(k));
-		}
 
-		public void Train(IEnumerable<string> arguments)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Predict(IEnumerable<string> arguments)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void SaveResultToFile(IEnumerable<string> arguments)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void LoadDataset(IEnumerable<string> arguments)
-		{
-			throw new NotImplementedException();
+			if(iterations != null)
+			{
+				RunKMeans(dataset, Int32.Parse(k), Int32.Parse(iterations));
+			}
+			else
+			{
+				RunKMeans(dataset, Int32.Parse(k));
+			}
 		}
 
 	}

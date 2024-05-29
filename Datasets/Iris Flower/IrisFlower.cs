@@ -10,7 +10,7 @@ namespace MachineLearningCLI.Datasets.Iris_Flower
         public double PetalWidth;
         public string Species = String.Empty;
 
-        public void InitializeDataPoint(string values)
+		public void InitializeDataPoint(string values)
         {
             var splitData = values.Split(',');
             SepalLengt = double.Parse(splitData[0], CultureInfo.InvariantCulture);
@@ -30,5 +30,20 @@ namespace MachineLearningCLI.Datasets.Iris_Flower
         {    
             Console.WriteLine($"{SepalLengt:f2},          {SepalWidth:f2},         {PetalLength:f2},          {PetalWidth:f2},         {Species}");
         }
-    }
+
+		public int GetClass()
+		{
+			switch(Species)
+			{
+				case "Iris-setosa":
+					return 0;
+				case "Iris-versicolor":
+					return 1;
+				case "Iris-virginica":
+					return 2;
+				default:
+					throw new Exception($"Unknown IrisFlower class {Species}.");
+			}
+		}
+	}
 }

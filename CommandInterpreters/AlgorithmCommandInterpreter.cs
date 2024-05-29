@@ -127,7 +127,8 @@ namespace MachineLearningCLI.CommandInterpreters
             ConsoleHelper.WritePartlyGreenText("CLI Name: ", $"{algorithmMetadata.CLIName}");
 			ConsoleHelper.WritePartlyGreenText("Command Syntax: ", $"{algorithmMetadata.CommandSyntax}");
 			ConsoleHelper.WritePartlyGreenText("Command Example: ", $"{algorithmMetadata.ExampleCommand}");
-			ConsoleHelper.WritePartlyGreenText("Time Complexity:", $"{algorithmMetadata.TimeComplexity}");
+			ConsoleHelper.WritePartlyGreenText("Default Parameters: ", $"{algorithmMetadata.DefaultParameters}");
+			ConsoleHelper.WritePartlyGreenText("Time Complexity: ", $"{algorithmMetadata.TimeComplexity}");
             ConsoleHelper.WritePartlyGreenText("Description: ", $"{algorithmMetadata.Description}");
         }
 
