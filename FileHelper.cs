@@ -1,4 +1,6 @@
-﻿namespace MachineLearningCLI.Helpers
+﻿using MachineLearningCLI.CommandInterpreters;
+
+namespace MachineLearningCLI.Helpers
 {
     public static class FileHelper
     {
@@ -30,5 +32,5 @@
             return File.ReadAllText(filePath);
         }
 
-    }
+	}
 }

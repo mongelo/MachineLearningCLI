@@ -18,7 +18,11 @@ namespace MachineLearningCLI.CommandInterpreters
                 case "a":
                     AlgorithmCommandInterpreter.Interpret(command);
                     break;
-                case "exit":
+				case "help":
+				case "h":
+                    ShowGenericHelp();
+					break;
+				case "exit":
                     Console.WriteLine("Exiting CLI. Goodbye!");
                     return;
                 default:
@@ -26,5 +30,15 @@ namespace MachineLearningCLI.CommandInterpreters
                     break;
             }
         }
-    }
+
+		private static void ShowGenericHelp()
+		{
+			Console.WriteLine("Try commands like:");
+			ConsoleHelper.WriteHelpText("dataset help","Shows more detailed dataset commands.");
+			ConsoleHelper.WriteHelpText("algorithm help", "Shows more detailed algorithm commands.");
+			ConsoleHelper.WriteHelpText("wiki help", "Shows more detailed wiki commands.");
+			ConsoleHelper.WriteHelpText("stats help", "Shows more detailed stats commands.");
+		}
+
+	}
 }

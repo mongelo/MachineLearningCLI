@@ -48,7 +48,7 @@ namespace MachineLearningCLI.CommandInterpreters
             Console.WriteLine("Try commands like:");
             ConsoleHelper.WriteHelpText("dataset list", "Lists all available datasets.");
             ConsoleHelper.WriteHelpText("dataset detail <dataset-name || dataset-id>","Shows the detailed metadata of a dataset specified by name or id.");
-            ConsoleHelper.WriteHelpText("dataset print <dataset-name || dataset-id> [raw]","Prints a formatted representation of the dataset. -raw prints dataset directly from file.");
+            ConsoleHelper.WriteHelpText("dataset print <dataset-name || dataset-id> [raw]","Prints a formatted representation of the dataset. [raw] prints dataset directly from file.");
         }
 
         private static void ShowDetailedDatasetInformation(IEnumerable<string> arguments) 
@@ -107,7 +107,7 @@ namespace MachineLearningCLI.CommandInterpreters
             }
         }
 
-        private static DatasetMetadata? GetDatasetMetadataFromQuery(string query)
+		private static DatasetMetadata? GetDatasetMetadataFromQuery(string query)
         {
             return _datasetsMetadata.SingleOrDefault(meta =>
                 meta.CLIName.ToLower() == query.ToLower() || meta.Id.ToString() == query);
@@ -125,18 +125,19 @@ namespace MachineLearningCLI.CommandInterpreters
             _datasetsMetadata = DatasetRepository.LoadAllDatasetMetadata();
         }
 
-        private static void ShowAllDatasets()
+        public static void ShowAllDatasets()
         {
             _datasetsMetadata.ForEach(dataset => {
                 Console.WriteLine($"-  {dataset.CLIName} (N={dataset.Size}), Id={dataset.Id}");
             });
         }
-        private static void NoDatasetFound(string datasetQuery)
-        {
-            Console.WriteLine("No data set called " + datasetQuery);
-            Console.WriteLine("Available datasets:");
-            ShowAllDatasets();
-        }
-        
-    }
+
+		private static void NoDatasetFound(string datasetQuery)
+		{
+			Console.WriteLine("No data set called " + datasetQuery);
+			Console.WriteLine("Available datasets:");
+			ShowAllDatasets();
+		}
+
+	}
 }

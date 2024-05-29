@@ -1,8 +1,6 @@
-﻿using MachineLearningCLI.Datasets;
-using MachineLearningCLI.Datasets.Iris_Flower;
-using MachineLearningCLI.Entities;
+﻿using MachineLearningCLI.Entities;
 using MachineLearningCLI.Repositories;
-using System.Data;
+using System.Linq;
 
 namespace MachineLearningCLI.CommandInterpreters
 {
@@ -28,18 +26,49 @@ namespace MachineLearningCLI.CommandInterpreters
                 case "l":
                     HandleAlgorithmListCommand(command.Arguments);
                     break;
-                //DETAIL COMMAND
-                default:
+                case "detail":
+                case "d":
+                    ShowDetailedAlgorithmInformation(command.Arguments);
+                    break;
+				case "run":
+				case "r":
+					HandleAlgorithmRunCommand(command.Arguments);
+					break;
+
+				default:
                     ConsoleHelper.HandleUnknownCommand();
                     break;
             }
         }
 
-        private static void ShowAlgorithmHelp()
+        private static void HandleAlgorithmRunCommand(IEnumerable<string> arguments)
+        {
+            var algorithmQuery = arguments.FirstOrDefault();
+			if (algorithmQuery == null)
+			{
+				Console.WriteLine($"Specify an algorithm name to list the details for. Command format: \"algorithm detail <algorithm-name || algorithm-id>\".");
+				return;
+			}
+
+			var algorithmMetadata = GetAlgorithmMetadataFromQuery(algorithmQuery);
+
+			if (algorithmMetadata == null)
+			{
+				NoAlgorithmFound(algorithmQuery);
+				return;
+			}
+
+			var algorithm = AlgorithmFactory.CreateAlgorithm(algorithmMetadata);
+            algorithm.Run(arguments.Skip(1).ToArray());
+		}
+
+
+		private static void ShowAlgorithmHelp()
         {
             Console.WriteLine("Try commands like:");
             ConsoleHelper.WriteHelpText("algorithm list", "Lists all available algorithms.");
-        }
+			ConsoleHelper.WriteHelpText("algorithm detail <algorithm-name || algorithm-id>", "Shows the detailed metadata of an algorithm specified by name or id.");
+		}
 
         private static void HandleAlgorithmListCommand(IEnumerable<string> arguments)
         {
@@ -53,6 +82,38 @@ namespace MachineLearningCLI.CommandInterpreters
             _algorithmsMetadata = AlgorithmRepository.LoadAllAlgorithmMetadata();
         }
 
+        private static void ShowDetailedAlgorithmInformation(IEnumerable<string> arguments)
+        {
+            var algorithmQuery = arguments.FirstOrDefault();
+            if (algorithmQuery == null)
+            {
+                Console.WriteLine($"Specify an algorithm name to list the details for. Command format: \"algorithm detail <algorithm-name || algorithm-id>\".");
+                return;
+            }
+
+            var algorithmMetadata = GetAlgorithmMetadataFromQuery(algorithmQuery);
+
+            if (algorithmMetadata == null)
+            {
+                NoAlgorithmFound(algorithmQuery);
+                return;
+            }
+
+            ConsoleHelper.PrintEmptyLine();
+            Console.WriteLine($"Name: {algorithmMetadata.Name}, Id={algorithmMetadata.Id}");
+            Console.WriteLine($"CLI Name: {algorithmMetadata.CLIName}");
+            ConsoleHelper.PrintEmptyLine();
+            Console.WriteLine($"Description: {algorithmMetadata.Description}");
+			ConsoleHelper.PrintEmptyLine();
+			Console.WriteLine($"Time Complexity: {algorithmMetadata.TimeComplexity}");
+        }
+
+        private static AlgorithmMetadata? GetAlgorithmMetadataFromQuery(string query)
+        {
+            return _algorithmsMetadata.SingleOrDefault(meta =>
+                meta.CLIName.ToLower() == query.ToLower() || meta.Id.ToString() == query);
+        }
+
         private static void ShowAllAlgorithms()
         {
             _algorithmsMetadata.ForEach(algorithm =>
@@ -60,6 +121,13 @@ namespace MachineLearningCLI.CommandInterpreters
                 Console.WriteLine($"-  {algorithm.CLIName}, Id={algorithm.Id}");
             });
         }
-        
+
+        private static void NoAlgorithmFound(string algorithmQuery)
+        {
+            Console.WriteLine("No algorithm called " + algorithmQuery);
+            Console.WriteLine("Available algorithms:");
+            ShowAllAlgorithms();
+        }
+
     }
 }

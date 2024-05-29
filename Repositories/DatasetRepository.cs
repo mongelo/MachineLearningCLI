@@ -26,7 +26,23 @@ namespace MachineLearningCLI.Repositories
             return DatasetsMetadata;
         }
 
-        public static string GetDatsetRawText(DatasetMetadata datasetMetadata) 
+		public static DatasetMetadata? LoadDatasetMetadata(string datasetQuery)
+		{
+			var DatasetsMetadata = new List<DatasetMetadata>();
+
+			var datasetDirectories = Directory.GetDirectories(DatasetDirectoryPath());
+
+			foreach (var directory in datasetDirectories)
+			{
+				var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\datasetMetadata.json");
+				var dataset = JsonSerializer.Deserialize<DatasetMetadata>(jsonData);
+				if (dataset != null) DatasetsMetadata.Add(dataset);
+			}
+
+			return DatasetsMetadata.SingleOrDefault(d => d.CLIName.ToLower() == datasetQuery || d.Id.ToString() == datasetQuery);
+		}
+
+		public static string GetDatsetRawText(DatasetMetadata datasetMetadata) 
         {
             return FileHelper.ReadRawTextFromFile(DatasetDirectoryPath()+"\\"+datasetMetadata.Name + "\\data"+datasetMetadata.FileFormat);
         }
