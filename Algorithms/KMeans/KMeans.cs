@@ -8,9 +8,10 @@ namespace MachineLearningCLI.Algorithms.KMeans
     public class KMeans : IAlgorithm
 	{
 		const int numberOfConvergesInARowToComplete = 100;
+		const int defaultNumberOfIterations = 250;
 
-		//Should support any dataset later
-		public void RunKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations = 250)
+        //Should support any dataset later
+        public void RunKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations)
 		{
 			var allData = dataset.GetDataPoints();
 			var N = dataset.DatasetMetadata.Size;
@@ -20,7 +21,9 @@ namespace MachineLearningCLI.Algorithms.KMeans
 			var convergesInARow = 0;
 
 			int[] dataPointCentroidAssignments = new int[N];
-			int iterations = 0;
+			if(numberOfIterations==default) numberOfIterations = defaultNumberOfIterations;
+
+            int iterations = 0;
 			while (iterations < numberOfIterations)
 			{
 				//Assign each data point to the closest centroid
