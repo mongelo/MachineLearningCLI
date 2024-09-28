@@ -11,6 +11,7 @@ public interface IDataset
     IDataPoint[] GetDataPointsForTraining();
     double[][] GetDataPointsAsDoubleArray();
     int GetClass(int index);
+    string GetClassName(int index);
 }
 
 public class Dataset<T> : IDataset where T : IData, new()

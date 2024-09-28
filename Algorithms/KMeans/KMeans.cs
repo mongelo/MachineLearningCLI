@@ -2,6 +2,7 @@
 using MachineLearningCLI.Datasets.Iris_Flower;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace MachineLearningCLI.Algorithms.KMeans;
 
@@ -11,7 +12,7 @@ public class KMeans : IAlgorithm
     const int defaultNumberOfIterations = 250;
 
     //Should support any dataset later
-    private void TrainKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations)
+    private KMeansModel TrainKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations)
     {
         var trainingData = dataset.GetDataPointsForTraining();
         var N = dataset.NumberOfTrainingDataPoints;
@@ -31,11 +32,11 @@ public class KMeans : IAlgorithm
             {
                 var datapoint = trainingData[i].GetDataAsDoubleArray();
                 var closestCentroid = -1;
-                var closestDistance = -1.0;
+                var closestDistance = double.MaxValue;
                 for (var j = 0; j < k; j++)
                 {
                     var distance = MathHelper.EuclideanDistance(datapoint, centroids[j]);
-                    if (closestDistance > distance || closestDistance == -1)
+                    if (closestDistance > distance)
                     {
                         closestDistance = distance;
                         closestCentroid = j;
@@ -131,20 +132,30 @@ public class KMeans : IAlgorithm
             Console.Write($"   - Centroid {centroidCount} (Most likely class = {dataset.GetClassName(centroidClass[centroidCount - 1])}): ");
             Console.WriteLine(string.Join(", ", centroid.Select(c => $"{c:F4}")));
         }
+
+        List<Centroid> modelCentroids = new();
+        var c = 0;
+        foreach (var centroid in centroids)
+        {
+            modelCentroids.Add(new Centroid
+            {
+                Classification = dataset.GetClassName(centroidClass[c]),
+                Coordinate = centroid
+            });
+            c++;
+        }
+
+        var kmeansModelObject = new KMeansModelObject(modelCentroids);
+        var model = new KMeansModel(kmeansModelObject);
+
+        return model;
     }
 
-    public void EvaluateKmeans(Dataset<IrisFlower> dataset)
+    public void EvaluateKmeans(Dataset<IrisFlower> dataset, KMeansModel model)
     {
         var evaluationData = dataset.GetDataPointsForEvaluation();
+        model.Evaluate(dataset, evaluationData);
     }
-
-    public void Evaluate(Dataset<IrisFlower> dataset)
-    {
-        // var evaluationData = dataset.GetDataPointsForEvaluation();
-        EvaluateKmeans(dataset);
-    }
-
-
 
     public void Run(IEnumerable<string> arguments)
     {
@@ -173,10 +184,8 @@ public class KMeans : IAlgorithm
 
         var dataset = (Dataset<IrisFlower>)DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
 
-        TrainKMeans(dataset, Int32.Parse(k), iterations == null ? default : Int32.Parse(iterations));
-        EvaluateKmeans(dataset);
-        //TODO: Run only on 70% and then evaluate the model on the remaining 30%
-
+        var model = TrainKMeans(dataset, Int32.Parse(k), iterations == null ? default : Int32.Parse(iterations));
+        EvaluateKmeans(dataset, model);
     }
 
 }
