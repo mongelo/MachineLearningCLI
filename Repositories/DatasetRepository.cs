@@ -1,56 +1,54 @@
 ﻿using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
-using System.IO;
 using System.Text.Json;
 
 
-namespace MachineLearningCLI.Repositories
+namespace MachineLearningCLI.Repositories;
+
+public static class DatasetRepository
 {
-    public static class DatasetRepository
+    private const string _datasetFolderName = "Datasets";
+
+    public static List<DatasetMetadata> LoadAllDatasetMetadata()
     {
-        private const string _datasetFolderName = "Datasets";
+        var DatasetsMetadata = new List<DatasetMetadata>();
 
-        public static List<DatasetMetadata> LoadAllDatasetMetadata()
+        var datasetDirectories = Directory.GetDirectories(DatasetDirectoryPath());
+
+        foreach (var directory in datasetDirectories)
         {
-            var DatasetsMetadata = new List<DatasetMetadata>();
-            
-            var datasetDirectories = Directory.GetDirectories(DatasetDirectoryPath());
-
-            foreach (var directory in datasetDirectories)
-            {
-                var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\datasetMetadata.json");
-                var dataset = JsonSerializer.Deserialize<DatasetMetadata>(jsonData);
-                if (dataset != null) DatasetsMetadata.Add(dataset);
-            }
-
-            return DatasetsMetadata;
+            var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\datasetMetadata.json");
+            var dataset = JsonSerializer.Deserialize<DatasetMetadata>(jsonData);
+            if (dataset != null) DatasetsMetadata.Add(dataset);
         }
 
-		public static DatasetMetadata? LoadDatasetMetadata(string datasetQuery)
-		{
-			var DatasetsMetadata = new List<DatasetMetadata>();
+        return DatasetsMetadata;
+    }
 
-			var datasetDirectories = Directory.GetDirectories(DatasetDirectoryPath());
+    public static DatasetMetadata? LoadDatasetMetadata(string datasetQuery)
+    {
+        var DatasetsMetadata = new List<DatasetMetadata>();
 
-			foreach (var directory in datasetDirectories)
-			{
-				var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\datasetMetadata.json");
-				var dataset = JsonSerializer.Deserialize<DatasetMetadata>(jsonData);
-				if (dataset != null) DatasetsMetadata.Add(dataset);
-			}
+        var datasetDirectories = Directory.GetDirectories(DatasetDirectoryPath());
 
-			return DatasetsMetadata.SingleOrDefault(d => d.CLIName.ToLower() == datasetQuery || d.Id.ToString() == datasetQuery);
-		}
-
-		public static string GetDatsetRawText(DatasetMetadata datasetMetadata) 
+        foreach (var directory in datasetDirectories)
         {
-            return FileHelper.ReadRawTextFromFile(DatasetDirectoryPath()+"\\"+datasetMetadata.Name + "\\data"+datasetMetadata.FileFormat);
+            var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\datasetMetadata.json");
+            var dataset = JsonSerializer.Deserialize<DatasetMetadata>(jsonData);
+            if (dataset != null) DatasetsMetadata.Add(dataset);
         }
 
-        public static string DatasetDirectoryPath()
-        {
-            var projectFolder = FileHelper.GetProjectFolder();
-            return Path.Combine(projectFolder, _datasetFolderName);
-        }
+        return DatasetsMetadata.SingleOrDefault(d => d.CLIName.ToLower() == datasetQuery || d.Id.ToString() == datasetQuery);
+    }
+
+    public static string GetDatsetRawText(DatasetMetadata datasetMetadata)
+    {
+        return FileHelper.ReadRawTextFromFile(DatasetDirectoryPath() + "\\" + datasetMetadata.Name + "\\data" + datasetMetadata.FileFormat);
+    }
+
+    public static string DatasetDirectoryPath()
+    {
+        var projectFolder = FileHelper.GetProjectFolder();
+        return Path.Combine(projectFolder, _datasetFolderName);
     }
 }

@@ -1,24 +1,23 @@
 ﻿using MachineLearningCLI.Entities;
 
-namespace MachineLearningCLI.Algorithms
+namespace MachineLearningCLI.Algorithms;
+
+public interface IAlgorithm
 {
-	public interface IAlgorithm
-	{
-		public void Run(IEnumerable<string> arguments);
-	}
+    public void Run(IEnumerable<string> arguments);
+}
 
-	public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()//not sure if T should also be IAlgorithm
-	{
-		public T AlgorithmGeneric;
-		public AlgorithmMetadata AlgorithmMetadata { get; set; }
+public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()//not sure if T should also be IAlgorithm
+{
+    public T AlgorithmGeneric;
+    public AlgorithmMetadata AlgorithmMetadata { get; set; }
 
-		public virtual void Run(IEnumerable<string> arguments) { AlgorithmGeneric.Run(arguments); }
+    public virtual void Run(IEnumerable<string> arguments) { AlgorithmGeneric.Run(arguments); }
 
-		public Algorithm(AlgorithmMetadata algorithmMetadata)
-		{
-			AlgorithmGeneric = new T();
-			AlgorithmMetadata = algorithmMetadata;
-		}
+    public Algorithm(AlgorithmMetadata algorithmMetadata)
+    {
+        AlgorithmGeneric = new T();
+        AlgorithmMetadata = algorithmMetadata;
+    }
 
-	}
 }

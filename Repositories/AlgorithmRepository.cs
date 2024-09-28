@@ -3,32 +3,31 @@ using MachineLearningCLI.Helpers;
 using System.Text.Json;
 
 
-namespace MachineLearningCLI.Repositories
+namespace MachineLearningCLI.Repositories;
+
+public static class AlgorithmRepository
 {
-    public static class AlgorithmRepository
+    private const string _algorithmFolderName = "Algorithms";
+
+    public static List<AlgorithmMetadata> LoadAllAlgorithmMetadata()
     {
-        private const string _algorithmFolderName = "Algorithms";
+        var AlgorithmsMetadata = new List<AlgorithmMetadata>();
 
-        public static List<AlgorithmMetadata> LoadAllAlgorithmMetadata()
+        var algorithmDirectories = Directory.GetDirectories(AlgorithmDirectoryPath());
+
+        foreach (var directory in algorithmDirectories)
         {
-            var AlgorithmsMetadata = new List<AlgorithmMetadata>();
-            
-            var algorithmDirectories = Directory.GetDirectories(AlgorithmDirectoryPath());
-
-            foreach (var directory in algorithmDirectories)
-            {
-                var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\algorithmMetadata.json");
-                var algorithm = JsonSerializer.Deserialize<AlgorithmMetadata>(jsonData);
-                if (algorithm != null) AlgorithmsMetadata.Add(algorithm);
-            }
-
-            return AlgorithmsMetadata;
+            var jsonData = FileHelper.ReadRawTextFromFile(directory + "\\algorithmMetadata.json");
+            var algorithm = JsonSerializer.Deserialize<AlgorithmMetadata>(jsonData);
+            if (algorithm != null) AlgorithmsMetadata.Add(algorithm);
         }
 
-        public static string AlgorithmDirectoryPath()
-        {
-            var projectFolder = FileHelper.GetProjectFolder();
-            return Path.Combine(projectFolder, _algorithmFolderName);
-        }
+        return AlgorithmsMetadata;
+    }
+
+    public static string AlgorithmDirectoryPath()
+    {
+        var projectFolder = FileHelper.GetProjectFolder();
+        return Path.Combine(projectFolder, _algorithmFolderName);
     }
 }

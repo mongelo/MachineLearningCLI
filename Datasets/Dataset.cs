@@ -2,90 +2,114 @@
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 
-namespace MachineLearningCLI.Datasets
+namespace MachineLearningCLI.Datasets;
+
+public interface IDataset
 {
-    public interface IDataset
-	{
-        public void PrintRawDataset();
-        public void PrintDatasetFormatted();
-		IDataPoint[] GetDataPoints();
-		double[][] GetDataPointsAsDoubleArray();
-        int GetClass(int index);
-	}
+    public void PrintRawDataset();
+    public void PrintDatasetFormatted();
+    IDataPoint[] GetDataPointsForTraining();
+    double[][] GetDataPointsAsDoubleArray();
+    int GetClass(int index);
+}
 
-    public class Dataset<T> : IDataset where T : IData, new()
+public class Dataset<T> : IDataset where T : IData, new()
+{
+    public DatasetMetadata DatasetMetadata { get; set; }
+    public DataPoint<T>[] _dataPoints;
+    public T StaticDataPoint;
+    public int NumberOfTrainingDataPoints;
+
+    protected string DatasetRawData { get; set; } = String.Empty;
+
+    private double trainingSetFraction;
+
+    private string[] _columnNames { get; set; }
+
+    public Dataset(DatasetMetadata datasetMetadata, double _trainingSetFraction)
     {
-		protected string DatasetRawData { get; set; } = String.Empty;
-		public DatasetMetadata DatasetMetadata { get; set; }
-        public DataPoint<T>[] _dataPoints;
-        public T StaticDataPoint;
+        DatasetMetadata = datasetMetadata;
+        _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
+        _columnNames = new string[DatasetMetadata.Columns];
+        StaticDataPoint = new T();
+        trainingSetFraction = _trainingSetFraction;
+        NumberOfTrainingDataPoints = (int)(trainingSetFraction * DatasetMetadata.Size);
 
-        private string[] _columnNames { get; set; }
+        Load();
+    }
 
-        public Dataset(DatasetMetadata datasetMetadata) 
-		{
-            DatasetMetadata = datasetMetadata;
-            _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
-            _columnNames = new string[DatasetMetadata.Size];
-            StaticDataPoint = new T();
-			Load();
-		}
+    public void Load()
+    {
+        DatasetRawData = DatasetRepository.GetDatsetRawText(DatasetMetadata);
 
-		public void Load()
-		{
-			DatasetRawData = DatasetRepository.GetDatsetRawText(DatasetMetadata);
+        var allRawRows = DatasetRawData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        _columnNames = allRawRows[0].Replace("\r", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        var allRawRowsList = allRawRows.Skip(1);
 
-            var allRawRows = DatasetRawData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            _columnNames = allRawRows[0].Replace("\r", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var allRawRowsList = allRawRows.Skip(1);
-
-            var i = 0;
-            foreach (var row in allRawRowsList)
-            {
-                _dataPoints[i] = new DataPoint<T>(row.Replace("\r", ""));
-                i++;
-            }
-        }
-
-        public void PrintRawDataset()
+        var i = 0;
+        foreach (var row in allRawRowsList)
         {
-            Console.WriteLine(DatasetRawData);
+            _dataPoints[i] = new DataPoint<T>(row.Replace("\r", ""));
+            i++;
         }
 
-        public void PrintDatasetFormatted()
+        var shouldShuffleDataPoints = trainingSetFraction != 0 && trainingSetFraction != 1;
+        if (shouldShuffleDataPoints)
         {
-            foreach (var column in _columnNames)
-            {
-                Console.Write(column + "   ");
-            }
-            ConsoleHelper.PrintEmptyLine();
-
-            var i = 0;
-            while (i < DatasetMetadata.Size)
-            {
-                _dataPoints[i].Print();
-                i++;
-            }
+            ArrayHelper.ShuffleArray(_dataPoints);
         }
 
-		public IDataPoint[] GetDataPoints()
-		{
-			return _dataPoints.Cast<IDataPoint>().ToArray();
-		}
+    }
 
-		public double[][] GetDataPointsAsDoubleArray()
-		{
-			return _dataPoints.Select(x => x.GetDataAsDoubleArray()).ToArray();
-		}
+    public void PrintRawDataset()
+    {
+        Console.WriteLine(DatasetRawData);
+    }
 
-        public int GetClass(int index)
-		{
-			return _dataPoints[index].Data.GetClass();
-		}
+    public void PrintDatasetFormatted()
+    {
+        foreach (var column in _columnNames)
+        {
+            Console.Write(column + "   ");
+        }
+        ConsoleHelper.PrintEmptyLine();
 
-		public string GetClassName(int classNumber)
-		{
-			return StaticDataPoint.GetClassName(classNumber);
-		}
-	}
+        var i = 0;
+        while (i < DatasetMetadata.Size)
+        {
+            _dataPoints[i].Print();
+            i++;
+        }
+    }
+
+    public IDataPoint[] GetDataPointsForTraining()
+    {
+        return _dataPoints
+           .Take(NumberOfTrainingDataPoints)
+           .Cast<IDataPoint>()
+           .ToArray();
+    }
+
+    public IDataPoint[] GetDataPointsForEvaluation()
+    {
+        return _dataPoints
+           .Skip(NumberOfTrainingDataPoints)
+           .Cast<IDataPoint>()
+           .ToArray();
+    }
+
+    public double[][] GetDataPointsAsDoubleArray()
+    {
+        return _dataPoints.Select(x => x.GetDataAsDoubleArray()).ToArray();
+    }
+
+    public int GetClass(int index)
+    {
+        return _dataPoints[index].Data.GetClass();
+    }
+
+    public string GetClassName(int classNumber)
+    {
+        return StaticDataPoint.GetClassName(classNumber);
+    }
 }
