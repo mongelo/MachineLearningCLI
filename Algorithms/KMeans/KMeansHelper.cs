@@ -34,6 +34,6 @@ public static class KMeansHelper
 
 public class Centroid()
 {
-    public string? Classification { get; set; }
+    public int Classification { get; set; }
     public double[] Coordinate { get; set; } = Array.Empty<double>();
 }

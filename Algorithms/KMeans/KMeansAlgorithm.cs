@@ -2,11 +2,10 @@
 using MachineLearningCLI.Datasets.Iris_Flower;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
-using System.ComponentModel.DataAnnotations;
 
 namespace MachineLearningCLI.Algorithms.KMeans;
 
-public class KMeans : IAlgorithm
+public class KMeansAlgorithm : IAlgorithm
 {
     const int numberOfConvergesInARowToComplete = 100;
     const int defaultNumberOfIterations = 250;
@@ -133,17 +132,11 @@ public class KMeans : IAlgorithm
             Console.WriteLine(string.Join(", ", centroid.Select(c => $"{c:F4}")));
         }
 
-        List<Centroid> modelCentroids = new();
-        var c = 0;
-        foreach (var centroid in centroids)
+        var modelCentroids = centroids.Select((centroid, index) => new Centroid
         {
-            modelCentroids.Add(new Centroid
-            {
-                Classification = dataset.GetClassName(centroidClass[c]),
-                Coordinate = centroid
-            });
-            c++;
-        }
+            Classification = centroidClass[index],
+            Coordinate = centroid
+        }).ToList();
 
         var kmeansModelObject = new KMeansModelObject(modelCentroids);
         var model = new KMeansModel(kmeansModelObject);
@@ -154,7 +147,7 @@ public class KMeans : IAlgorithm
     public void EvaluateKmeans(Dataset<IrisFlower> dataset, KMeansModel model)
     {
         var evaluationData = dataset.GetDataPointsForEvaluation();
-        model.Evaluate(dataset, evaluationData);
+        model.Evaluate(evaluationData);
     }
 
     public void Run(IEnumerable<string> arguments)

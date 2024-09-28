@@ -18,3 +18,7 @@ This is a CLI where I implement my own machine learning algorithms and where the
 ## Features Required for Others to be Able to Use this App
 - Uploading of custom data sets.
 - Creation of custom algorithms.
+
+## TODO
+- Handle error when k>N when running kmeans.
+- Parameter for changing trainingSetFactor in run command.
