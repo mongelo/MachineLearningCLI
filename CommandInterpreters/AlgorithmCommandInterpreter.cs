@@ -1,4 +1,5 @@
-﻿using MachineLearningCLI.Entities;
+﻿using MachineLearningCLI.Algorithms;
+using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 

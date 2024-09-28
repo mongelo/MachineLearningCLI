@@ -14,6 +14,8 @@ This is a CLI where I implement my own machine learning algorithms and where the
 - Algorithm variants: K-Means and Parallel K-Means for example.
 - Data set and algorithm tags. Used to make sure only applicable data sets are selectable when running an algorithm.
 - Run only with a subset of the data and evaluate the results with the remaining data.
+- Support more scores, not just total correct predictions.
+- Save models (outputs of trainings) for later.
 
 ## Features Required for Others to be Able to Use this App
 - Uploading of custom data sets.

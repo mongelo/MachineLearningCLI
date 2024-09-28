@@ -1,5 +1,4 @@
 ﻿using MachineLearningCLI.Datasets;
-using MachineLearningCLI.Datasets.Iris_Flower;
 
 namespace MachineLearningCLI.Algorithms;
 
@@ -10,6 +9,12 @@ public abstract class Model
 
     public void Evaluate(IDataPoint[] dataPoints)
     {
+        if (!ModelIsTrained)
+        {
+            Console.WriteLine("Model has not been trained yet!");
+            return;
+        }
+
         var correctPredictions = 0;
         foreach (var dataPoint in dataPoints)
         {

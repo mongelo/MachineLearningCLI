@@ -24,7 +24,6 @@ public class Dataset<T> : IDataset where T : IData, new()
     protected string DatasetRawData { get; set; } = String.Empty;
 
     private double trainingSetFraction;
-
     private string[] _columnNames { get; set; }
 
     public Dataset(DatasetMetadata datasetMetadata, double _trainingSetFraction)

@@ -1,6 +1,7 @@
-﻿using MachineLearningCLI.Algorithms;
-using MachineLearningCLI.Algorithms.KMeans;
+﻿using MachineLearningCLI.Algorithms.KMeans;
 using MachineLearningCLI.Entities;
+
+namespace MachineLearningCLI.Algorithms;
 
 public class AlgorithmFactory
 {

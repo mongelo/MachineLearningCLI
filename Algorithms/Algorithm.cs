@@ -7,7 +7,7 @@ public interface IAlgorithm
     public void Run(IEnumerable<string> arguments);
 }
 
-public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()//not sure if T should also be IAlgorithm
+public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()
 {
     public T AlgorithmGeneric;
     public AlgorithmMetadata AlgorithmMetadata { get; set; }
