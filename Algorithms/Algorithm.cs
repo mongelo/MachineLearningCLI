@@ -19,5 +19,4 @@ public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()
         AlgorithmGeneric = new T();
         AlgorithmMetadata = algorithmMetadata;
     }
-
 }

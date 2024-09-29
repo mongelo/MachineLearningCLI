@@ -174,8 +174,12 @@ public class KMeansAlgorithm : IAlgorithm
         }
 
         var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
-
         var dataset = (Dataset<IrisFlower>)DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
+        if (dataset.NumberOfTrainingDataPoints < int.Parse(k))
+        {
+            ValidationHelper.ShowValidationMessage($"The number of clusters, k, must be larger than the amount of training data points ({dataset.NumberOfTrainingDataPoints}).");
+            return;
+        }
 
         var model = TrainKMeans(dataset, Int32.Parse(k), iterations == null ? default : Int32.Parse(iterations));
         EvaluateKmeans(dataset, model);

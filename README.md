@@ -22,5 +22,4 @@ This is a CLI where I implement my own machine learning algorithms and where the
 - Creation of custom algorithms.
 
 ## TODO
-- Handle error when k>N when running kmeans.
 - Parameter for changing trainingSetFactor in run command.
