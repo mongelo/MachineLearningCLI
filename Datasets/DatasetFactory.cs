@@ -1,5 +1,6 @@
 ﻿using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Datasets.Iris_Flower;
+using MachineLearningCLI.Datasets.Red_Wine_Quality;
 using MachineLearningCLI.Entities;
 
 public class DatasetFactory
@@ -10,6 +11,8 @@ public class DatasetFactory
         {
             case "IrisFlower":
                 return new Dataset<IrisFlower>(datasetMetadata, trainingSetFraction);
+            case "RedWine":
+                return new Dataset<RedWine>(datasetMetadata, trainingSetFraction);
             default:
                 throw new InvalidOperationException("Unknown CLIName");
         }

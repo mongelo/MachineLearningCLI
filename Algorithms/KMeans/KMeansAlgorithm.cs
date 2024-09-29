@@ -11,7 +11,7 @@ public class KMeansAlgorithm : IAlgorithm
     const int defaultNumberOfIterations = 250;
 
     //Should support any dataset later
-    private KMeansModel TrainKMeans(Dataset<IrisFlower> dataset, int k, int numberOfIterations)
+    private KMeansModel TrainKMeans(IDataset dataset, int k, int numberOfIterations)
     {
         var trainingData = dataset.GetDataPointsForTraining();
         var N = dataset.NumberOfTrainingDataPoints;
@@ -144,7 +144,7 @@ public class KMeansAlgorithm : IAlgorithm
         return model;
     }
 
-    public void EvaluateKmeans(Dataset<IrisFlower> dataset, KMeansModel model)
+    public void EvaluateKmeans(IDataset dataset, KMeansModel model)
     {
         var evaluationData = dataset.GetDataPointsForEvaluation();
         model.Evaluate(evaluationData);
@@ -174,7 +174,7 @@ public class KMeansAlgorithm : IAlgorithm
         }
 
         var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
-        var dataset = (Dataset<IrisFlower>)DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
+        var dataset = DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
         if (dataset.NumberOfTrainingDataPoints < int.Parse(k))
         {
             ValidationHelper.ShowValidationMessage($"The number of clusters, k, must be larger than the amount of training data points ({dataset.NumberOfTrainingDataPoints}).");

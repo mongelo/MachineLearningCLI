@@ -9,9 +9,13 @@ public interface IDataset
     public void PrintRawDataset();
     public void PrintDatasetFormatted();
     IDataPoint[] GetDataPointsForTraining();
+    IDataPoint[] GetDataPointsForEvaluation();
     double[][] GetDataPointsAsDoubleArray();
     int GetClass(int index);
     string GetClassName(int index);
+
+    int NumberOfTrainingDataPoints { get; }
+    DatasetMetadata DatasetMetadata { get; }
 }
 
 public class Dataset<T> : IDataset where T : IData, new()
@@ -19,7 +23,7 @@ public class Dataset<T> : IDataset where T : IData, new()
     public DatasetMetadata DatasetMetadata { get; set; }
     public DataPoint<T>[] _dataPoints;
     public T StaticDataPoint;
-    public int NumberOfTrainingDataPoints;
+    public int NumberOfTrainingDataPoints { get; }
 
     protected string DatasetRawData { get; set; } = String.Empty;
 
