@@ -181,7 +181,7 @@ public class KMeansAlgorithm : IAlgorithm
             return;
         }
 
-        var model = TrainKMeans(dataset, Int32.Parse(k), iterations == null ? default : Int32.Parse(iterations));
+        var model = TrainKMeans(dataset, int.Parse(k), iterations == null ? default : int.Parse(iterations));
         EvaluateKmeans(dataset, model);
     }
 

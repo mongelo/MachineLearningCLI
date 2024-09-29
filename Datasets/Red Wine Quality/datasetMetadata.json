@@ -1,0 +1,11 @@
+﻿{
+  "Name": "Red Wine Quality",
+  "Id": 1,
+  "CLIName": "RedWine",
+  "Description": "This dataset contains the chemical composition of red wine samples, as well as their overall quality rating (0 - 10).",
+  "Source": "https://www.kaggle.com/datasets/uciml/red-wine-quality-cortez-et-al-2009/data",
+  "Size": 1599,
+  "Columns": 11,
+  "FileFormat": ".csv",
+  "Classes": 11
+}
