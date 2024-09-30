@@ -9,7 +9,7 @@ public class KMeansModel : Model
         ModelObject = kmeansModelObject;
     }
 
-    public override bool Predict(IDataPoint dataPoint)
+    public override bool Predict(DataPoint dataPoint)
     {
         var closestCentroid = KMeansHelper.CentroidClosestToPoint(((KMeansModelObject)ModelObject).Centroids, dataPoint);
         return dataPoint.GetClass() == closestCentroid.Classification;

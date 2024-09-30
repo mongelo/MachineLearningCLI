@@ -8,8 +8,8 @@ public interface IDataset
 {
     public void PrintRawDataset();
     public void PrintDatasetFormatted();
-    public IDataPoint[] GetDataPointsForTraining();
-    public IDataPoint[] GetDataPointsForEvaluation();
+    public DataPoint[] GetDataPointsForTraining();
+    public DataPoint[] GetDataPointsForEvaluation();
     public double[][] GetDataPointsAsDoubleArray();
 
     public int GetClass(int index);
@@ -19,10 +19,10 @@ public interface IDataset
     DatasetMetadata DatasetMetadata { get; }
 }
 
-public class Dataset<T> : IDataset where T : IData, new()
+public class Dataset<T> : IDataset where T : DataPoint, new()
 {
     public DatasetMetadata DatasetMetadata { get; set; }
-    public DataPoint<T>[] _dataPoints;
+    public DataPoint[] _dataPoints;
     public T GenericDataPoint;
     public int NumberOfTrainingDataPoints { get; }
 
@@ -35,7 +35,7 @@ public class Dataset<T> : IDataset where T : IData, new()
         DatasetMetadata = datasetMetadata;
         GenericDataPoint = new T();
 
-        _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
+        _dataPoints = new DataPoint[DatasetMetadata.Size];
         _columnNames = new string[DatasetMetadata.Columns];
 
         this._trainingSetFraction = _trainingSetFraction;
@@ -55,7 +55,7 @@ public class Dataset<T> : IDataset where T : IData, new()
         var i = 0;
         foreach (var row in allRawRowsList)
         {
-            _dataPoints[i] = new DataPoint<T>(row.Replace("\r", ""));
+            _dataPoints[i] = DataPoint.CreateDataPoint<T>(row.Replace("\r", ""));
             i++;
         }
 
@@ -88,19 +88,19 @@ public class Dataset<T> : IDataset where T : IData, new()
         }
     }
 
-    public IDataPoint[] GetDataPointsForTraining()
+    public DataPoint[] GetDataPointsForTraining()
     {
         return _dataPoints
            .Take(NumberOfTrainingDataPoints)
-           .Cast<IDataPoint>()
+           .Cast<DataPoint>()
            .ToArray();
     }
 
-    public IDataPoint[] GetDataPointsForEvaluation()
+    public DataPoint[] GetDataPointsForEvaluation()
     {
         return _dataPoints
            .Skip(NumberOfTrainingDataPoints)
-           .Cast<IDataPoint>()
+           .Cast<DataPoint>()
            .ToArray();
     }
 
@@ -111,7 +111,7 @@ public class Dataset<T> : IDataset where T : IData, new()
 
     public int GetClass(int index)
     {
-        return _dataPoints[index].Data.GetClass();
+        return _dataPoints[index].GetClass();
     }
 
     public string GetClassName(int classNumber)

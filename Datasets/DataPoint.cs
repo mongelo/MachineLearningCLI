@@ -1,43 +1,17 @@
 ﻿namespace MachineLearningCLI.Datasets;
 
-public interface IData
+public abstract class DataPoint
 {
-    public void InitializeDataPoint(string values);
-    public void PrintDataPoint();
+    public abstract int GetClass();
+    public abstract string GetClassName(int classNumber);
+    public abstract double[] GetDataAsDoubleArray();
+    public abstract void Print();
+    public abstract void InitializeDataPoint(string values);
 
-    public double[] GetDataAsDoubleArray();
-    public int GetClass();
-    public string GetClassName(int classNumber);
-}
-
-public interface IDataPoint
-{
-    public double[] GetDataAsDoubleArray();
-    public int GetClass();
-}
-
-public class DataPoint<T> : IDataPoint where T : IData, new()
-{
-    public T Data;
-
-    public DataPoint(string values)
+    public static T CreateDataPoint<T>(string values) where T : DataPoint, new()
     {
-        Data = new T();
-        Data.InitializeDataPoint(values);
-    }
-
-    public int GetClass()
-    {
-        return Data.GetClass();
-    }
-
-    public double[] GetDataAsDoubleArray()
-    {
-        return Data.GetDataAsDoubleArray();
-    }
-
-    public void Print()
-    {
-        Data.PrintDataPoint();
+        var dataPoint = new T();
+        dataPoint.InitializeDataPoint(values);
+        return dataPoint;
     }
 }

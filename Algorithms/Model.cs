@@ -5,9 +5,9 @@ namespace MachineLearningCLI.Algorithms;
 public abstract class Model
 {
     public bool ModelIsTrained { get => ModelObject != null; }
-    public virtual ModelObject? ModelObject { get; set; } = null;
+    public virtual ModelObject? ModelObject { get; set; }
 
-    public void Evaluate(IDataPoint[] dataPoints)
+    public void Evaluate(DataPoint[] dataPoints)
     {
         if (!ModelIsTrained)
         {
@@ -24,7 +24,7 @@ public abstract class Model
     }
 
 
-    public abstract bool Predict(IDataPoint dataPoint);
+    public abstract bool Predict(DataPoint dataPoint);
 }
 
 public abstract class ModelObject;

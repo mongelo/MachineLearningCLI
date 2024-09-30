@@ -15,7 +15,7 @@ public static class KMeansHelper
             .ToArray();
     }
 
-    public static Centroid CentroidClosestToPoint(List<Centroid> centroids, IDataPoint dataPoint) 
+    public static Centroid CentroidClosestToPoint(List<Centroid> centroids, DataPoint dataPoint) 
     {
         var currentClosestDistance = double.MaxValue;
         Centroid currentClosestCentroid = centroids.First();

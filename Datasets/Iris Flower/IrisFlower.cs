@@ -2,7 +2,7 @@
 
 namespace MachineLearningCLI.Datasets.Iris_Flower;
 
-public class IrisFlower : IData
+public class IrisFlower : DataPoint
 {
     public double SepalLengt;
     public double SepalWidth;
@@ -10,7 +10,7 @@ public class IrisFlower : IData
     public double PetalWidth;
     public string Species = String.Empty;
 
-    public void InitializeDataPoint(string values)
+    public override void InitializeDataPoint(string values)
     {
         var splitData = values.Split(',');
         SepalLengt = double.Parse(splitData[0], CultureInfo.InvariantCulture);
@@ -20,17 +20,17 @@ public class IrisFlower : IData
         Species = splitData[4];
     }
 
-    public double[] GetDataAsDoubleArray()
+    public override double[] GetDataAsDoubleArray()
     {
         return [SepalLengt, SepalWidth, PetalLength, PetalWidth];
     }
 
-    public void PrintDataPoint()
+    public override void Print()
     {
         Console.WriteLine($"{SepalLengt:f2},          {SepalWidth:f2},         {PetalLength:f2},          {PetalWidth:f2},         {Species}");
     }
 
-    public int GetClass()
+    public override int GetClass()
     {
         switch (Species)
         {
@@ -45,7 +45,7 @@ public class IrisFlower : IData
         }
     }
 
-    public string GetClassName(int classNumber)
+    public override string GetClassName(int classNumber)
     {
         switch (classNumber)
         {

@@ -2,7 +2,7 @@
 
 namespace MachineLearningCLI.Datasets.Red_Wine_Quality;
 
-public class RedWine : IData
+public class RedWine : DataPoint
 {
     public double FixedAcidity;
     public double VolatileAcidity;
@@ -17,7 +17,7 @@ public class RedWine : IData
     public double Alcohol;
     public int Quality;
 
-    public void InitializeDataPoint(string values)
+    public override void InitializeDataPoint(string values)
     {
         var splitData = values.Split(',');
         FixedAcidity = double.Parse(splitData[0], CultureInfo.InvariantCulture);
@@ -34,22 +34,22 @@ public class RedWine : IData
         Quality = int.Parse(splitData[11], CultureInfo.InvariantCulture);
     }
 
-    public double[] GetDataAsDoubleArray()
+    public override double[] GetDataAsDoubleArray()
     {
         return [FixedAcidity, VolatileAcidity, CitricAcid, ResidualSugar, Chlorides, FreeSulfurDioxide, TotalSulfurDioxide, Density, PH, Sulphates, Alcohol];
     }
 
-    public void PrintDataPoint()
+    public override void Print()
     {
         Console.WriteLine($"{FixedAcidity:f2}, {VolatileAcidity:f2}, {CitricAcid:f2}, {ResidualSugar:f2}, {Chlorides:f2}, {FreeSulfurDioxide:f2}, {TotalSulfurDioxide:f2}, {Density:f2}, {PH:f2}, {Sulphates:f2}, {Alcohol:f2}");
     }
 
-    public int GetClass()
+    public override int GetClass()
     {
         return Quality;
     }
 
-    public string GetClassName(int classNumber)
+    public override string GetClassName(int classNumber)
     {
         return classNumber.ToString();
     }
