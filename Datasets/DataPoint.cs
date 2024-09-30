@@ -2,18 +2,18 @@
 
 public interface IData
 {
-    void InitializeDataPoint(string values);
-    void PrintDataPoint();
+    public void InitializeDataPoint(string values);
+    public void PrintDataPoint();
 
-    double[] GetDataAsDoubleArray();
-    int GetClass();
-    string GetClassName(int classNumber);
+    public double[] GetDataAsDoubleArray();
+    public int GetClass();
+    public string GetClassName(int classNumber);
 }
 
 public interface IDataPoint
 {
-    double[] GetDataAsDoubleArray();
-    int GetClass();
+    public double[] GetDataAsDoubleArray();
+    public int GetClass();
 }
 
 public class DataPoint<T> : IDataPoint where T : IData, new()

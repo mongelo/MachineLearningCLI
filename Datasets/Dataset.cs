@@ -8,11 +8,12 @@ public interface IDataset
 {
     public void PrintRawDataset();
     public void PrintDatasetFormatted();
-    IDataPoint[] GetDataPointsForTraining();
-    IDataPoint[] GetDataPointsForEvaluation();
-    double[][] GetDataPointsAsDoubleArray();
-    int GetClass(int index);
-    string GetClassName(int index);
+    public IDataPoint[] GetDataPointsForTraining();
+    public IDataPoint[] GetDataPointsForEvaluation();
+    public double[][] GetDataPointsAsDoubleArray();
+
+    public int GetClass(int index);
+    public string GetClassName(int index);
 
     int NumberOfTrainingDataPoints { get; }
     DatasetMetadata DatasetMetadata { get; }
@@ -22,27 +23,28 @@ public class Dataset<T> : IDataset where T : IData, new()
 {
     public DatasetMetadata DatasetMetadata { get; set; }
     public DataPoint<T>[] _dataPoints;
-    public T StaticDataPoint;
+    public T GenericDataPoint;
     public int NumberOfTrainingDataPoints { get; }
 
     protected string DatasetRawData { get; set; } = String.Empty;
-
-    private double trainingSetFraction;
+    private double _trainingSetFraction;
     private string[] _columnNames { get; set; }
 
     public Dataset(DatasetMetadata datasetMetadata, double _trainingSetFraction)
     {
         DatasetMetadata = datasetMetadata;
+        GenericDataPoint = new T();
+
         _dataPoints = new DataPoint<T>[DatasetMetadata.Size];
         _columnNames = new string[DatasetMetadata.Columns];
-        StaticDataPoint = new T();
-        trainingSetFraction = _trainingSetFraction;
-        NumberOfTrainingDataPoints = (int)(trainingSetFraction * DatasetMetadata.Size);
+
+        this._trainingSetFraction = _trainingSetFraction;
+        NumberOfTrainingDataPoints = (int)(this._trainingSetFraction * DatasetMetadata.Size);
 
         Load();
     }
 
-    public void Load()
+    private void Load()
     {
         DatasetRawData = DatasetRepository.GetDatsetRawText(DatasetMetadata);
 
@@ -57,7 +59,7 @@ public class Dataset<T> : IDataset where T : IData, new()
             i++;
         }
 
-        var shouldShuffleDataPoints = trainingSetFraction != 0 && trainingSetFraction != 1;
+        var shouldShuffleDataPoints = _trainingSetFraction != 0 && _trainingSetFraction != 1;
         if (shouldShuffleDataPoints)
         {
             ArrayHelper.ShuffleArray(_dataPoints);
@@ -114,6 +116,6 @@ public class Dataset<T> : IDataset where T : IData, new()
 
     public string GetClassName(int classNumber)
     {
-        return StaticDataPoint.GetClassName(classNumber);
+        return GenericDataPoint.GetClassName(classNumber);
     }
 }
