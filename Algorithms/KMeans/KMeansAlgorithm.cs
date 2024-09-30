@@ -1,12 +1,14 @@
 ﻿using MachineLearningCLI.Datasets;
-using MachineLearningCLI.Datasets.Iris_Flower;
+using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Algorithms.KMeans;
 
-public class KMeansAlgorithm : IAlgorithm
+public class KMeansAlgorithm : Algorithm
 {
+    public KMeansAlgorithm(AlgorithmMetadata algorithmMetadata) : base(algorithmMetadata){}
+
     const int numberOfConvergesInARowToComplete = 100;
     const int defaultNumberOfIterations = 250;
 
@@ -150,7 +152,7 @@ public class KMeansAlgorithm : IAlgorithm
         model.Evaluate(evaluationData);
     }
 
-    public void Run(IEnumerable<string> arguments)
+    public override void Run(IEnumerable<string> arguments)
     {
         var datasetQuery = CommandHelper.GetParameterValueFromArguments(arguments, "d");
         if (datasetQuery == null)

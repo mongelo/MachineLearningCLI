@@ -7,16 +7,14 @@ public interface IAlgorithm
     public void Run(IEnumerable<string> arguments);
 }
 
-public class Algorithm<T> : IAlgorithm where T : IAlgorithm, new()
+public abstract class Algorithm : IAlgorithm
 {
-    public T AlgorithmGeneric;
-    public AlgorithmMetadata AlgorithmMetadata { get; set; }
+    public AlgorithmMetadata? AlgorithmMetadata { get; set; }
 
-    public virtual void Run(IEnumerable<string> arguments) { AlgorithmGeneric.Run(arguments); }
+    public abstract void Run(IEnumerable<string> arguments);
 
-    public Algorithm(AlgorithmMetadata algorithmMetadata)
+    protected Algorithm(AlgorithmMetadata algorithmMetadata)
     {
-        AlgorithmGeneric = new T();
         AlgorithmMetadata = algorithmMetadata;
     }
 }

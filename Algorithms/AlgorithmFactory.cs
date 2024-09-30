@@ -10,7 +10,7 @@ public class AlgorithmFactory
         switch (algorithmMetadata.CLIName)
         {
             case "kmeans":
-                return new Algorithm<KMeansAlgorithm>(algorithmMetadata);
+                return  new KMeansAlgorithm(algorithmMetadata);
             default:
                 throw new InvalidOperationException("Unknown CLIName");
         }
