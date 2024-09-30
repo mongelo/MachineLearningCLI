@@ -23,7 +23,7 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
 {
     public DatasetMetadata DatasetMetadata { get; set; }
     public DataPoint[] _dataPoints;
-    public T GenericDataPoint;
+    public DataPoint GenericDataPoint;
     public int NumberOfTrainingDataPoints { get; }
 
     protected string DatasetRawData { get; set; } = String.Empty;
@@ -35,7 +35,7 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
         DatasetMetadata = datasetMetadata;
         GenericDataPoint = new T();
 
-        _dataPoints = new DataPoint[DatasetMetadata.Size];
+        _dataPoints = new T[DatasetMetadata.Size];
         _columnNames = new string[DatasetMetadata.Columns];
 
         this._trainingSetFraction = _trainingSetFraction;
