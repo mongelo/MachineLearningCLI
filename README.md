@@ -22,5 +22,5 @@ This is a CLI where I implement my own machine learning algorithms and where the
 - Creation of custom algorithms.
 
 ## TODO
+- New algorithm suited for classification (Decision Tree maybe?).
 - Parameter for changing trainingSetFactor in run command.
-- New algorithm suited for classification (Decision Tree maybe?)
