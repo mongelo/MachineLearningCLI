@@ -27,8 +27,10 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
     public int NumberOfTrainingDataPoints { get; }
 
     protected string DatasetRawData { get; set; } = String.Empty;
-    private double _trainingSetFraction;
-    private string[] _columnNames { get; set; }
+    private readonly double _trainingSetFraction;
+    private string[] _columnNames;
+    private static readonly char[] newLineSeparator = ['\n'];
+    private static readonly char[] commaSeparator = [','];
 
     public Dataset(DatasetMetadata datasetMetadata, double _trainingSetFraction)
     {
@@ -48,8 +50,8 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
     {
         DatasetRawData = DatasetRepository.GetDatsetRawText(DatasetMetadata);
 
-        var allRawRows = DatasetRawData.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        _columnNames = allRawRows[0].Replace("\r", "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        var allRawRows = DatasetRawData.Split(newLineSeparator, StringSplitOptions.RemoveEmptyEntries);
+        _columnNames = allRawRows[0].Replace("\r", "").Split(commaSeparator, StringSplitOptions.RemoveEmptyEntries);
         var allRawRowsList = allRawRows.Skip(1);
 
         var i = 0;

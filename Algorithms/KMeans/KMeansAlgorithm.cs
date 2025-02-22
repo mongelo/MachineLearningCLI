@@ -5,15 +5,12 @@ using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Algorithms.KMeans;
 
-public class KMeansAlgorithm : Algorithm
+public class KMeansAlgorithm(AlgorithmMetadata algorithmMetadata) : Algorithm(algorithmMetadata)
 {
-    public KMeansAlgorithm(AlgorithmMetadata algorithmMetadata) : base(algorithmMetadata){}
-
     const int numberOfConvergesInARowToComplete = 100;
     const int defaultNumberOfIterations = 250;
 
-    //Should support any dataset later
-    private KMeansModel TrainKMeans(IDataset dataset, int k, int numberOfIterations)
+    private static KMeansModel TrainKMeans(IDataset dataset, int k, int numberOfIterations)
     {
         var trainingData = dataset.GetDataPointsForTraining();
         var N = dataset.NumberOfTrainingDataPoints;
@@ -146,7 +143,7 @@ public class KMeansAlgorithm : Algorithm
         return model;
     }
 
-    public void EvaluateKmeans(IDataset dataset, KMeansModel model)
+    public static void EvaluateKmeans(IDataset dataset, KMeansModel model)
     {
         var evaluationData = dataset.GetDataPointsForEvaluation();
         model.Evaluate(evaluationData);

@@ -13,7 +13,7 @@ public static class FileHelper
 
         if (indexOfBin != -1)
         {
-            return path.Substring(0, indexOfBin);
+            return path[..indexOfBin];
         }
         else
         {

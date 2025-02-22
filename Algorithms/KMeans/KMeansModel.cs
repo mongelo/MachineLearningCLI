@@ -11,13 +11,12 @@ public class KMeansModel : Model
 
     public override bool Predict(DataPoint dataPoint)
     {
-        var closestCentroid = KMeansHelper.CentroidClosestToPoint(((KMeansModelObject)ModelObject).Centroids, dataPoint);
+        var closestCentroid = KMeansHelper.CentroidClosestToPoint(((KMeansModelObject)ModelObject!).Centroids, dataPoint);
         return dataPoint.GetClass() == closestCentroid.Classification;
     }
 }
 
-public class KMeansModelObject : ModelObject
+public class KMeansModelObject(List<Centroid> centroids) : ModelObject
 {
-    public KMeansModelObject(List<Centroid> centroids) => Centroids = centroids;
-    public readonly List<Centroid> Centroids = new List<Centroid>();
+    public readonly List<Centroid> Centroids = centroids;
 }

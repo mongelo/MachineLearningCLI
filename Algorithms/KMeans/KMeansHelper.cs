@@ -7,7 +7,7 @@ public static class KMeansHelper
 {
     public static double[][] InitializeKMeansCentroidsToBeRandomDataPoints(IDataset dataset, int k)
     {
-        Random random = new Random();
+        Random random = new();
 
         return dataset.GetDataPointsAsDoubleArray()
             .OrderBy(x => random.Next())
@@ -35,5 +35,5 @@ public static class KMeansHelper
 public class Centroid()
 {
     public int Classification { get; set; }
-    public double[] Coordinate { get; set; } = Array.Empty<double>();
+    public double[] Coordinate { get; set; } = [];
 }

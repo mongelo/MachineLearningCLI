@@ -32,32 +32,24 @@ public class IrisFlower : DataPoint
 
     public override int GetClass()
     {
-        switch (Species)
+        return Species switch
         {
-            case "Iris-setosa":
-                return 0;
-            case "Iris-versicolor":
-                return 1;
-            case "Iris-virginica":
-                return 2;
-            default:
-                throw new Exception($"Unknown IrisFlower class {Species}.");
-        }
+            "Iris-setosa" => 0,
+            "Iris-versicolor" => 1,
+            "Iris-virginica" => 2,
+            _ => throw new Exception($"Unknown IrisFlower class {Species}."),
+        };
     }
 
     public override string GetClassName(int classNumber)
     {
-        switch (classNumber)
+        return classNumber switch
         {
-            case 0:
-                return "Iris-setosa";
-            case 1:
-                return "Iris-versicolor";
-            case 2:
-                return "Iris-virginica";
-            default:
-                throw new Exception($"Unknown IrisFlower class {classNumber}.");
-        }
+            0 => "Iris-setosa",
+            1 => "Iris-versicolor",
+            2 => "Iris-virginica",
+            _ => throw new Exception($"Unknown IrisFlower class {classNumber}."),
+        };
     }
 
 }

@@ -7,12 +7,10 @@ public class AlgorithmFactory
 {
     public static IAlgorithm CreateAlgorithm(AlgorithmMetadata algorithmMetadata)
     {
-        switch (algorithmMetadata.CLIName)
+        return algorithmMetadata.CLIName switch
         {
-            case "kmeans":
-                return  new KMeansAlgorithm(algorithmMetadata);
-            default:
-                throw new InvalidOperationException("Unknown CLIName");
-        }
+            "kmeans" => new KMeansAlgorithm(algorithmMetadata),
+            _ => throw new InvalidOperationException("Unknown CLIName"),
+        };
     }
 }

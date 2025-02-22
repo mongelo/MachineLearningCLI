@@ -1,20 +1,18 @@
-﻿using MachineLearningCLI.Datasets;
-using MachineLearningCLI.Datasets.Iris_Flower;
+﻿using MachineLearningCLI.Datasets.Iris_Flower;
 using MachineLearningCLI.Datasets.Red_Wine_Quality;
 using MachineLearningCLI.Entities;
+
+namespace MachineLearningCLI.Datasets;
 
 public class DatasetFactory
 {
     public static IDataset CreateDataset(DatasetMetadata datasetMetadata, double trainingSetFraction = 0.7)
     {
-        switch (datasetMetadata.CLIName)
+        return datasetMetadata.CLIName switch
         {
-            case "IrisFlower":
-                return new Dataset<IrisFlower>(datasetMetadata, trainingSetFraction);
-            case "RedWine":
-                return new Dataset<RedWine>(datasetMetadata, trainingSetFraction);
-            default:
-                throw new InvalidOperationException("Unknown CLIName");
-        }
+            "IrisFlower" => new Dataset<IrisFlower>(datasetMetadata, trainingSetFraction),
+            "RedWine" => new Dataset<RedWine>(datasetMetadata, trainingSetFraction),
+            _ => throw new InvalidOperationException("Unknown CLIName"),
+        };
     }
 }

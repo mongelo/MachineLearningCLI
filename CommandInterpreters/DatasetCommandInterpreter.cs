@@ -1,4 +1,5 @@
-﻿using MachineLearningCLI.Entities;
+﻿using MachineLearningCLI.Datasets;
+using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
 
@@ -7,7 +8,7 @@ namespace MachineLearningCLI.CommandInterpreters;
 public static class DatasetCommandInterpreter
 {
     private const string _commandName = "dataset";
-    private static List<DatasetMetadata> _datasetsMetadata = new List<DatasetMetadata>();
+    private static List<DatasetMetadata> _datasetsMetadata = [];
 
     public static void Interpret(Command command)
     {

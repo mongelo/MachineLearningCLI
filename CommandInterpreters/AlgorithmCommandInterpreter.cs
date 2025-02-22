@@ -8,7 +8,7 @@ namespace MachineLearningCLI.CommandInterpreters;
 public static class AlgorithmCommandInterpreter
 {
     private const string _commandName = "algorithm";
-    private static List<AlgorithmMetadata> _algorithmsMetadata = new List<AlgorithmMetadata>();
+    private static List<AlgorithmMetadata> _algorithmsMetadata = [];
 
     public static void Interpret(Command command)
     {
