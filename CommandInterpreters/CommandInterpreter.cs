@@ -19,7 +19,11 @@ public static class CommandInterpreter
             case "a":
                 AlgorithmCommandInterpreter.Interpret(command);
                 break;
-            case "help":
+			case "processor":
+			case "p":
+				ProcessorCommandInterpreter.Interpret(command);
+				break;
+			case "help":
             case "h":
                 ShowGenericHelp();
                 break;

@@ -1,5 +1,6 @@
 ﻿using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
+using MachineLearningCLI.Processors;
 using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Datasets;
@@ -8,11 +9,13 @@ public interface IDataset
 {
     public void PrintRawDataset();
     public void PrintDatasetFormatted();
-    public DataPoint[] GetDataPointsForTraining();
+	public DataPoint[] GetDataPoints();
+    void SetDataPoints(DataPoint[] dataPoints);
+	public DataPoint[] GetDataPointsForTraining();
     public DataPoint[] GetDataPointsForEvaluation();
     public double[][] GetDataPointsAsDoubleArray();
 
-    public int GetClass(int index);
+	public int GetClass(int index);
     public string GetClassName(int index);
 
     int NumberOfTrainingDataPoints { get; }
@@ -31,19 +34,22 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
     private string[] _columnNames;
     private static readonly char[] newLineSeparator = ['\n'];
     private static readonly char[] commaSeparator = [','];
+    private readonly DataProcessorOption _processorOption;
 
-    public Dataset(DatasetMetadata datasetMetadata, double _trainingSetFraction)
+	public Dataset(DatasetMetadata datasetMetadata, DataProcessorOption processorOption, double _trainingSetFraction)
     {
         DatasetMetadata = datasetMetadata;
         GenericDataPoint = new T();
 
         _dataPoints = new T[DatasetMetadata.Size];
         _columnNames = new string[DatasetMetadata.Columns];
+        _processorOption = processorOption;
 
-        this._trainingSetFraction = _trainingSetFraction;
+		this._trainingSetFraction = _trainingSetFraction;
         NumberOfTrainingDataPoints = (int)(this._trainingSetFraction * DatasetMetadata.Size);
 
         Load();
+        Processor.Process(this, _processorOption);
     }
 
     private void Load()
@@ -90,7 +96,10 @@ public class Dataset<T> : IDataset where T : DataPoint, new()
         }
     }
 
-    public DataPoint[] GetDataPointsForTraining()
+	public DataPoint[] GetDataPoints() => _dataPoints;
+    public void SetDataPoints(DataPoint[] dataPoints) { _dataPoints = dataPoints; }
+
+	public DataPoint[] GetDataPointsForTraining()
     {
         return _dataPoints
            .Take(NumberOfTrainingDataPoints)

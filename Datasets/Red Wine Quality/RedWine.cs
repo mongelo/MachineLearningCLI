@@ -54,4 +54,19 @@ public class RedWine : DataPoint
         return classNumber.ToString();
     }
 
+	public override void OverwriteWithProcessedValues(double[] values)
+	{
+        FixedAcidity = values[0];
+		VolatileAcidity = values[1];
+		CitricAcid = values[2];
+		ResidualSugar = values[3];
+		Chlorides = values[4];
+		FreeSulfurDioxide = values[5];
+		TotalSulfurDioxide = values[6];
+		Density = values[7];
+		PH = values[8];
+		Sulphates = values[9];
+		Alcohol = values[10];
+	}
+
 }

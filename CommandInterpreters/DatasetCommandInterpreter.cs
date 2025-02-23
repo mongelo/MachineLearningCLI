@@ -92,7 +92,7 @@ public static class DatasetCommandInterpreter
             return;
         }
 
-        var dataset = DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0);
+        var dataset = DatasetFactory.CreateDataset(datasetMetadata, Processors.DataProcessorOption.None, trainingSetFraction: 0);
 
         var isRaw = arguments.Contains("raw") || arguments.Contains("r");
 

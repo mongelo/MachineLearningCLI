@@ -8,7 +8,7 @@ public class IrisFlower : DataPoint
     public double SepalWidth;
     public double PetalLength;
     public double PetalWidth;
-    public string Species = String.Empty;
+    public string Species = "";
 
     public override void InitializeDataPoint(string values)
     {
@@ -52,4 +52,11 @@ public class IrisFlower : DataPoint
         };
     }
 
+	public override void OverwriteWithProcessedValues(double[] values)
+	{
+        SepalLengt = values[0];
+		SepalWidth = values[1];
+		PetalLength = values[2];
+		PetalWidth = values[3];
+	}
 }

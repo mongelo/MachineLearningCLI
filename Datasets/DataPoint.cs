@@ -7,6 +7,7 @@ public abstract class DataPoint
     public abstract double[] GetDataAsDoubleArray();
     public abstract void Print();
     public abstract void InitializeDataPoint(string values);
+    public abstract void OverwriteWithProcessedValues(double[] values);
 
     public static T CreateDataPoint<T>(string values) where T : DataPoint, new()
     {

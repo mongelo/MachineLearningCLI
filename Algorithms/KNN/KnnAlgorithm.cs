@@ -1,6 +1,7 @@
 ﻿using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
+using MachineLearningCLI.Processors;
 using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Algorithms.KNN;
@@ -50,7 +51,11 @@ public class KnnAlgorithm(AlgorithmMetadata algorithmMetadata) : Algorithm(algor
             return;
         }
 
-        var dataset = DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
+		var processorOption = DataProcessorOption.None;
+		var p = (CommandHelper.GetParameterValueFromArguments(arguments, "p"));
+		if (p != null) processorOption = (DataProcessorOption)Int32.Parse(p);
+
+		var dataset = DatasetFactory.CreateDataset(datasetMetadata, processorOption, trainingSetFraction: 0.7);
         if (dataset.NumberOfTrainingDataPoints < int.Parse(k))
         {
             ValidationHelper.ShowValidationMessage($"The number of nearest neighbours, k, must be larger than the amount of training data points ({dataset.NumberOfTrainingDataPoints}).");

@@ -33,7 +33,7 @@ public static class ConsoleHelper
 
     public static void ShowExampleCommands()
     {
-        Console.WriteLine("Try commands like:\ndataset\nalgorithm\nwiki\nstats");
+        Console.WriteLine("Try commands like:\ndataset\nalgorithm\nprocessor\nwiki\nstats");
     }
 
     public static void PrintEmptyLine()

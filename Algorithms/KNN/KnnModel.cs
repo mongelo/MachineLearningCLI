@@ -17,7 +17,7 @@ public class KnnModel : Model
 		var k = model.NumberOfNearestNeighbours;
 		var numberOfTrainingDataPoints = model.KnnDatapoints.Length;
 		var closestPoints = new (double distance, int classValue)[k];
-		double cutOffDistance = -1;
+		var cutOffDistance = -1.0;
 
 		//Calculate distance to all points, keep track of k nearest points
         var currentDataPoint = dataPoint.GetDataAsDoubleArray();

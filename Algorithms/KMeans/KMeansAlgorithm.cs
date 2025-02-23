@@ -1,6 +1,7 @@
 ﻿using MachineLearningCLI.Datasets;
 using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
+using MachineLearningCLI.Processors;
 using MachineLearningCLI.Repositories;
 
 namespace MachineLearningCLI.Algorithms.KMeans;
@@ -172,14 +173,18 @@ public class KMeansAlgorithm(AlgorithmMetadata algorithmMetadata) : Algorithm(al
             return;
         }
 
-        var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
-        var dataset = DatasetFactory.CreateDataset(datasetMetadata, trainingSetFraction: 0.7);
+        var processorOption = DataProcessorOption.None;
+		var p = (CommandHelper.GetParameterValueFromArguments(arguments, "p"));
+        if (p != null) processorOption = (DataProcessorOption)Int32.Parse(p);
+
+		var dataset = DatasetFactory.CreateDataset(datasetMetadata, processorOption, trainingSetFraction: 0.7);
         if (dataset.NumberOfTrainingDataPoints < int.Parse(k))
         {
             ValidationHelper.ShowValidationMessage($"The number of clusters, k, must be larger than the amount of training data points ({dataset.NumberOfTrainingDataPoints}).");
             return;
         }
 
+        var iterations = CommandHelper.GetParameterValueFromArguments(arguments, "i");
         var model = TrainKMeans(dataset, int.Parse(k), iterations == null ? default : int.Parse(iterations));
         EvaluateKmeans(dataset, model);
     }
