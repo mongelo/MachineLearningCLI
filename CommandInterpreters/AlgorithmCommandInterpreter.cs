@@ -90,7 +90,7 @@ public static class AlgorithmCommandInterpreter
         ConsoleHelper.WriteHelpText("algorithm help <algorithm-name || algorithm-id>", "Shows how to run a specific algorithm.");
         ConsoleHelper.WriteHelpText("algorithm list", "Lists all available algorithms.");
         ConsoleHelper.WriteHelpText("algorithm detail <algorithm-name || algorithm-id>", "Shows the detailed metadata of an algorithm specified by name or id.");
-        ConsoleHelper.WriteHelpText("algorithm run <algorithm-name || algorithm-id> d=<dataset-name || dataset-id> <algorithm-specific-parameters>", "Trains and evaluates an algorithm.");
+        ConsoleHelper.WriteHelpText("algorithm run <algorithm-name || algorithm-id> d=<dataset-name || dataset-id> [p=<processor-id>] <algorithm-specific-parameters>", "Trains and evaluates an algorithm.");
     }
 
 
