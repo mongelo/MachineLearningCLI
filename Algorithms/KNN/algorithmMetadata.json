@@ -1,0 +1,12 @@
+﻿{
+  "Name": "K-NN Classification",
+  "Id": 1,
+  "CLIName": "knn",
+  "AlgorithmType": "Classification",
+  "Description": "This algorithm classifies an unseen datapoint based on the majority class of the k nearest data points. There is no real training involved, upon prediction, the distance to all data points must be calculated.",
+  "TrainingTimeComplexity": "O(1).",
+  "PredictionTimeComplexity": "O(ND), where N is the number of data points in the training set and D is the dimensionality of the data points.",
+  "CommandSyntax": "TBD",
+  "ExampleCommand": "TBD",
+  "DefaultParameters": "TBD"
+}

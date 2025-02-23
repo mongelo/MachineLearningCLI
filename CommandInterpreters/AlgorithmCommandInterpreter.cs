@@ -129,7 +129,9 @@ public static class AlgorithmCommandInterpreter
         ConsoleHelper.WritePartlyGreenText("Command Syntax: ", $"{algorithmMetadata.CommandSyntax}");
         ConsoleHelper.WritePartlyGreenText("Command Example: ", $"{algorithmMetadata.ExampleCommand}");
         ConsoleHelper.WritePartlyGreenText("Default Parameters: ", $"{algorithmMetadata.DefaultParameters}");
-        ConsoleHelper.WritePartlyGreenText("Time Complexity: ", $"{algorithmMetadata.TimeComplexity}");
+        ConsoleHelper.WritePartlyGreenText("Training Time Complexity: ", $"{algorithmMetadata.TrainingTimeComplexity}");
+        ConsoleHelper.WritePartlyGreenText("Prediction Time Complexity: ", $"{algorithmMetadata.PredictionTimeComplexity}");
+        ConsoleHelper.WritePartlyGreenText("Alogithm Type: ", $"{algorithmMetadata.AlgorithmType}");
         ConsoleHelper.WritePartlyGreenText("Description: ", $"{algorithmMetadata.Description}");
     }
 

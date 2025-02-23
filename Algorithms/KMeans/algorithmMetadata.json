@@ -2,8 +2,10 @@
   "Name": "K-Means Clustering",
   "Id": 0,
   "CLIName": "kmeans",
+  "AlgorithmType": "Clustering",
   "Description": "K-Means is a popular clustering algorithm that partitions data into k distinct clusters based on feature similarity. It works by initializing k centroids, assigning each data point to the nearest centroid, and then iteratively updating the centroids based on the mean of the assigned points until convergence or for a specified number of iterations i. The goal is to minimize the sum of squared distances between data points and their respective centroids. K-Means is an unsupervised learning algorithm, meaning it doesn't have a concept of \"correctness\" in the same way that supervised learning algorithms. But a class can still be predicted by assigning classes to the output centroids. For example, one can assign a class to a centroid based on the most common class of all the data points that are closest to the centroid.",
-  "TimeComplexity": "T(NTK), where N is the total number of data points, K is the total number of partitions, and T is the number of iterations in the clustering process.",
+  "TrainingTimeComplexity": "T(NTKD), where N is the total number of data points, K is the total number of partitions, T is the number of iterations in the clustering process and D is the dimensionality of the data points.",
+  "PredictionTimeComplexity": "T(KD), where K is the total number of partitions and D is the dimensionality of the data points.",
   "CommandSyntax": "algorithm run kmeans d=<dataset-name || dataset-id> k=<number-of-centroids> [i=<iteration>]",
   "ExampleCommand": "algorithm run kmeans d=irisflower k=3",
   "DefaultParameters": "i=250"

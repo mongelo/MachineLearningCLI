@@ -1,4 +1,5 @@
 ﻿using MachineLearningCLI.Algorithms.KMeans;
+using MachineLearningCLI.Algorithms.KNN;
 using MachineLearningCLI.Entities;
 
 namespace MachineLearningCLI.Algorithms;
@@ -10,6 +11,7 @@ public class AlgorithmFactory
         return algorithmMetadata.CLIName switch
         {
             "kmeans" => new KMeansAlgorithm(algorithmMetadata),
+            "knn" => new KnnAlgorithm(algorithmMetadata),
             _ => throw new InvalidOperationException("Unknown CLIName"),
         };
     }

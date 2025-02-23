@@ -16,11 +16,12 @@ This is a CLI where I implement my own machine learning algorithms and where the
 - Run only with a subset of the data and evaluate the results with the remaining data.
 - Support more scores, not just total correct predictions.
 - Save models (outputs of trainings) for later.
+- Allow for easily swapping tie-breaking techniques in KNN-algorithm. Make it reusable for other algorithms. 
 
 ## Features Required for Others to be Able to Use this App
 - Uploading of custom data sets.
 - Creation of custom algorithms.
 
 ## TODO
-- New algorithm suited for classification (Decision Tree maybe?).
+- New algorithm suited for classification (K-NN maybe?).
 - Parameter for changing trainingSetFactor in run command.
