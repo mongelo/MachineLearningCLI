@@ -71,7 +71,8 @@ public static class DatasetCommandInterpreter
         ConsoleHelper.WritePartlyGreenText($"Name: ", $"{datasetMetadata.Name}, Id={datasetMetadata.Id}");
         ConsoleHelper.WritePartlyGreenText($"CLI Name: ", $"{datasetMetadata.CLIName}");
         ConsoleHelper.WritePartlyGreenText($"Size: ", $"N={datasetMetadata.Size}");
-        ConsoleHelper.WritePartlyGreenText($"Source: ", $"{datasetMetadata.Source}");
+		ConsoleHelper.WritePartlyGreenText($"Classes: ", $"{datasetMetadata.Classes}");
+		ConsoleHelper.WritePartlyGreenText($"Source: ", $"{datasetMetadata.Source}");
         ConsoleHelper.WritePartlyGreenText($"Description: ", $"{datasetMetadata.Description}");
     }
 

@@ -12,17 +12,17 @@ public class KnnAlgorithm(AlgorithmMetadata algorithmMetadata) : Algorithm(algor
     {
         var knnModelObject = new KnnModelObject
         {
-            KnnDataPoints = dataset.GetDataPointsAsDoubleArray(),
+			KnnDatapoints = dataset.GetDataPointsForTraining(),
             NumberOfNearestNeighbours = numberOfNearestNeighbours,
         };
-        return new KnnModel(knnModelObject);
+
+		Console.WriteLine($"Model trained (loaded into memory).");
+
+		return new KnnModel(knnModelObject);
     }
 
     public static void EvaluateKnn(IDataset dataset, KnnModel model)
     {
-        // TODO IMPLEMENT
-        Console.WriteLine("Not implemented yet!");
-
         var evaluationData = dataset.GetDataPointsForEvaluation();
         model.Evaluate(evaluationData);
     }

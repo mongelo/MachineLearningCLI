@@ -14,4 +14,14 @@ public static class ArrayHelper
         }
     }
 
+    public static void InsertIntoArrayAndPushOtherValuesDown<T>(T[] array, T value, int position)
+    {
+		for (int i = array.Length - 1; i > position; i--)
+		{
+			array[i] = array[i - 1];
+		}
+
+		array[position] = value;
+	}
+
 }
