@@ -44,7 +44,6 @@ public static class ProcessorCommandInterpreter
         ConsoleHelper.WriteHelpText("1 - Normalize", "Normalizes all data points to be between 0 and 1. Usage: write p=1 in the \"run algorithm\"-command.");
 		ConsoleHelper.PrintEmptyLine();
 		ShowExampleUsage();
-
 	}
 
     private static void ShowExampleUsage()

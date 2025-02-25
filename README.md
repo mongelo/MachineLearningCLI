@@ -25,3 +25,4 @@ This is a CLI where I implement my own machine learning algorithms and where the
 
 ## TODO
 - Parameter for changing trainingSetFactor in run command.
+- Persist Statistics on computer but do not version control them.

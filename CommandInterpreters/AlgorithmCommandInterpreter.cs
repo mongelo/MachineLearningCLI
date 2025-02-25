@@ -2,6 +2,7 @@
 using MachineLearningCLI.Entities;
 using MachineLearningCLI.Helpers;
 using MachineLearningCLI.Repositories;
+using static MachineLearningCLI.Statistics.Statistics;
 
 namespace MachineLearningCLI.CommandInterpreters;
 
@@ -61,6 +62,8 @@ public static class AlgorithmCommandInterpreter
 
         var algorithm = AlgorithmFactory.CreateAlgorithm(algorithmMetadata);
         algorithm.Run(arguments.Skip(1).ToArray());
+
+        IncreaseNumberOfModelsTrained();
     }
 
 
